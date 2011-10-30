@@ -226,11 +226,11 @@ h1 { font-size: 230%; padding: 10px 0; margin: 0; }
 #map_canvas { height: 100% }
 
 #footer {
+    color: #ccc;
     background: none repeat scroll 0 0 #1D1D1D;
  border: 1px solid rgba(0, 0, 0, 0.3);
  bottom: 0;
  font-family: Arial, Helvetica, sans-serif;
- height: 40px;
  left: 50%;
  margin: 0 auto 0 -490px;
  padding: 0 10px;
