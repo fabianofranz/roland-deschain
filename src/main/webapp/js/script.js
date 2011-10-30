@@ -12,7 +12,7 @@ $(document).ready(function() {
         });
     var infoWindow = new google.maps.InfoWindow({});
 
-    $.stream("./async", {
+    $.stream("../async", {
         type: "http",
         dataType: "json",
         context: $("#map-canvas")[0],
@@ -22,7 +22,7 @@ $(document).ready(function() {
         message: function(event) {
             $.each(event.data, function(index1, update) { 
                 if (update.object == "geography") {
-                    $.getJSON("./details?object=" + update.object_id, function(instagrams) {
+                    $.getJSON("../details?object=" + update.object_id, function(instagrams) {
                         $.each(instagrams.data, function(index2, instagram) {
                             var key = instagram.user.username + ':' + instagram.location.latitude + ':' + instagram.location.longitude;
                             if ($.inArray(key, markers) == -1) {

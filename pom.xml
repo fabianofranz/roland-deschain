@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>wherestagram</groupId>
-	<artifactId>wherestagram</artifactId>
+	<groupId>roland-deschain</groupId>
+	<artifactId>roland-deschain</artifactId>
 	<packaging>war</packaging>
 	<version>0.1</version>
-	<name>wherestagram</name>
-	<description>Simple   example   to    test   the   new    Servlet   3   async    support   with   no    web.xml   descriptor, using the Instagram real-time API.</description>
-	<url>https://github.com/fabianofranz/wherestagram</url>
+	<name>roland-deschain</name>
+	<description>"The doorway was the Lady's eyes. Roland Deschain was looking through them”.</description>
+	<url>https://github.com/fabianofranz/roland-deschain</url>
 	<developers>
 		<developer>
 			<id>fabianofranz</id>
@@ -100,7 +100,7 @@
 					<version>2.1.1</version>
 					<configuration>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
-						<warName>wherestagram</warName>
+						<warName>roland-deschain</warName>
 					</configuration>
 				</plugin>
 				<plugin>
