@@ -3,19 +3,21 @@ markers = new Array();
 $(document).ready(function() {
                     
     var position = new google.maps.LatLng(37.774947, -122.419414);
+    
     var map = new google.maps.Map(
-        document.getElementById("map_canvas"), 
+        document.getElementById("map"), 
         {
-            zoom: 14, 
+            zoom: 14,
             center: position, 
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+
     var infoWindow = new google.maps.InfoWindow({});
 
     $.stream("../async", {
         type: "http",
         dataType: "json",
-        context: $("#map-canvas")[0],
+        context: $("#map")[0],
         open: function(event, stream) {
             stream.send({});
         },
@@ -29,11 +31,15 @@ $(document).ready(function() {
                                 markers.push(key);
                                 var p = new google.maps.LatLng(instagram.location.latitude, instagram.location.longitude);
                                 var marker = new google.maps.Marker({
-                                    position: p, 
+                                    position: p,
                                     title: instagram.user.username
                                 });
                                 marker.setMap(map);
-                                infoWindow.setContent("<strong>" + instagram.user.username + "</strong> just saw:<br /><img style=\"width:" + instagram.images.thumbnail.width + "px;height:" + instagram.images.thumbnail.height + "px;\" src=\"" + instagram.images.thumbnail.url + "\" />");
+                                infoWindow.setContent(tmpl("info", { 
+                                    username: instagram.user.username, 
+                                    width: instagram.images.thumbnail.width, 
+                                    height: instagram.images.thumbnail.height, 
+                                    thumbnail: instagram.images.thumbnail.url }));
                                 infoWindow.open(map, marker);
                             }
 

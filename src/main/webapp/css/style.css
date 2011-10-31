@@ -212,28 +212,24 @@ td { vertical-align: top; }
    ========================================================================== */
 
 
-body, h1 {
-	font: normal normal normal 14px/1.5 'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', FreeSans, sans-serif;
-	color: #444;
-	font-weight: 300;
-}
 body {
+        font-family: 'Museo', serif;
+	font-size: 14px;
+	color: #444;
 	line-height: 140%;
-	background-color: #FEFEFE;
+	background-color: #fefefe;
 }
 
-h1 { font-size: 230%; padding: 10px 0; margin: 0; }
-#map_canvas { height: 100% }
+#map { height: 100% }
 
-#footer {
-    color: #ccc;
+header {
+    color: #fff;
     background: none repeat scroll 0 0 rgba(29, 29, 29, 0.8);
  border: 1px solid rgba(0, 0, 0, 0.3);
  bottom: 0;
- font-family: Arial, Helvetica, sans-serif;
  left: 50%;
  margin: 0 auto 0 -490px;
- padding: 0 10px;
+ padding: 5px 10px;
  position: fixed;
  text-shadow: 1px 1px 1px #000000;
  width: 960px;
@@ -242,7 +238,8 @@ h1 { font-size: 230%; padding: 10px 0; margin: 0; }
  border-radius: 10px 10px 0px 0px;
   -moz-box-shadow:0px 0px 11px #191919;
  -webkit-box-shadow:0px 0px 11px #191919;
- box-shadow:0px 0px 11px #191919;
+ box-shadow:0px 0px 6px #191919;
+ z-index:999;
 }
 
 
