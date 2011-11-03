@@ -57,7 +57,7 @@ public class WherestagramServlet extends HttpServlet {
 
             @Override
             public void onComplete(AsyncEvent event) throws IOException {
-                //ctxs.remove(ctx);
+                ctxs.remove(ctx);
             }
         });
 
@@ -93,13 +93,14 @@ public class WherestagramServlet extends HttpServlet {
                                     try {
 
                                         HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
-                                        PrintWriter writer = res.getWriter();
-                                        writer.write(message);
-                                        writer.flush();
                                         
                                         res.setCharacterEncoding("utf-8");
                                         res.setStatus(HttpServletResponse.SC_OK);
                                         res.setContentType("application/json");
+                                        
+                                        PrintWriter writer = res.getWriter();
+                                        writer.write(message);
+                                        writer.flush();
 
                                         //ctx.complete();
                                         
