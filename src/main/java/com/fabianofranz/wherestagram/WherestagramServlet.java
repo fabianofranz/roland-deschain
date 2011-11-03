@@ -36,14 +36,6 @@ public class WherestagramServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        res.setContentType("text/plain");
-        res.setCharacterEncoding("utf-8");
-        res.setHeader("Access-Control-Allow-Origin", "*");
-
-        PrintWriter writer = res.getWriter();
-        writer.print("2;Hi;");
-        writer.flush();
-
         final AsyncContext ctx = req.startAsync();
         ctx.setTimeout(0);
 
@@ -102,12 +94,16 @@ public class WherestagramServlet extends HttpServlet {
 
                                         HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
                                         PrintWriter writer = res.getWriter();
-                                        writer.write(message.length());
-                                        writer.write(';');
                                         writer.write(message);
-                                        writer.write(';');
                                         writer.flush();
+                                        
+                                        res.setContentType("text/plain");
+                                        res.setCharacterEncoding("utf-8");
+                                        res.setStatus(HttpServletResponse.SC_OK);
+                                        res.setContentType("application/json");
 
+                                        ctx.complete();
+                                        
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -118,7 +114,7 @@ public class WherestagramServlet extends HttpServlet {
                         }); 
                         
                     } else {
-                        try { Thread.sleep(1000); } catch (Exception e) { }
+                        try { Thread.sleep(500); } catch (Exception e) { }
                     }
                     
                 }
