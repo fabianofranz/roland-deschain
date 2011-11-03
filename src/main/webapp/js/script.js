@@ -1,10 +1,15 @@
 markers = new Array();
 
 poll = {
-    start: function() {
-        $.get("../async", function(data) {
-            poll.start();
-            handleData(data);
+    listen: function() {
+        $.ajax({ url: "../async", 
+            dataType: "json",
+            timeout: 30000,
+            complete: poll.listen,
+            success: function(data) {
+                poll.start();
+                handleData(data);
+            }
         });
     }
 }
@@ -27,7 +32,7 @@ $(document).ready(function() {
 
     var infoWindow = new google.maps.InfoWindow({});
     
-    poll.start();
+    poll.listen();
 
 });
 
