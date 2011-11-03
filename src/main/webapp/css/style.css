@@ -222,6 +222,8 @@ body {
 
 #map { height: 100% }
 
+#info { text-align: center; }
+
 header {
     color: #fff;
     background: none repeat scroll 0 0 rgba(29, 29, 29, 0.8);
