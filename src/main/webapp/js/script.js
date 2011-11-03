@@ -1,6 +1,6 @@
 markers = new Array();
 
-(function poll(){
+poll = function() {
     $.ajax({ 
         url: "../async", 
         dataType: "json", 
@@ -11,7 +11,7 @@ markers = new Array();
             handleData(data);
         } 
     });
-})();
+}
 	
     handleData = function(data) {
             alert(data);
