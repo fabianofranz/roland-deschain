@@ -250,9 +250,13 @@ header p.info { font-size: 150%; margin: 5px 0; }
 header p.tech { font-size: 90%; margin: 5px 0; }
 header a, header a:hover, header a:visited, header a:link { text-decoration: none; color: #62A9FF; }
 header a:hover { text-decoration: underline; }
-span.roland { color: #C06A45; }
-span.openshift, span.jbossas7 { color: #FF7575; }
-span.javaee6 { color: #03EBA6; }
+span.roland { color: #c06a45; }
+/*span.openshift, span.jbossas7 { color: #ff7575; }
+span.javaee6 { color: #03eba6; }*/
+
+div.info { text-align: center; }
+div.info span.username { font-weight: bold; color: #c06a45; }
+div.info img { border: 1px solid #c06a45; }
 
 
 /* ==|== non-semantic helper classes ========================================
