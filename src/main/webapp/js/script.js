@@ -22,9 +22,6 @@ poll = {
     }
 }
 
-poll = function() {
-}
-	
     handleData = function(data) {
             alert(data);
     }
@@ -43,7 +40,7 @@ $(document).ready(function() {
 
     var infoWindow = new google.maps.InfoWindow({});
     
-    poll();
+    poll.start();
 
 });
 
