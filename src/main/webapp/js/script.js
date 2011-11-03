@@ -7,7 +7,6 @@ poll = {
             timeout: 30000,
             complete: poll.listen,
             success: function(data) {
-                poll.start();
                 handleData(data);
             }
         });
