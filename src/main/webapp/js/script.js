@@ -1,7 +1,13 @@
 markers = new Array();
 
-poll = function() {
-    $.get("../async", function(data) {
+poll = {
+    start: function() {
+        $.get("../async", function(data) {
+            poll.handle();
+            handleData(data);
+        });
+    },
+    handle: function() {
         $.ajax({ 
             url: "../async", 
             dataType: "json",
@@ -10,10 +16,13 @@ poll = function() {
             cache: false, 
             timeout: 30000,
             success: function(data) {
-                handleData(data);
+                poll.start();
             } 
         });
-    });
+    }
+}
+
+poll = function() {
 }
 	
     handleData = function(data) {
