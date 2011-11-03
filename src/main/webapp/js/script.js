@@ -3,21 +3,8 @@ markers = new Array();
 poll = {
     start: function() {
         $.get("../async", function(data) {
-            poll.handle();
+            poll.start();
             handleData(data);
-        });
-    },
-    handle: function() {
-        $.ajax({ 
-            url: "../async", 
-            dataType: "json",
-            type: "POST",
-            async: true, 
-            cache: false, 
-            timeout: 30000,
-            success: function(data) {
-                poll.start();
-            } 
         });
     }
 }
