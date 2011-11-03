@@ -7,7 +7,6 @@ markers = new Array();
         async: true, 
         cache: false, 
         timeout: 30000,
-//        complete: poll, 
         success: function(data) {
             handleData(data);
         } 
