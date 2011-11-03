@@ -36,8 +36,15 @@ public class WherestagramServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+        res.setContentType("text/plain");
+        res.setCharacterEncoding("utf-8");
+        res.setHeader("Access-Control-Allow-Origin", "*");
+
+        PrintWriter writer = res.getWriter();
+        writer.print("2;Hi;");
+        writer.flush();
+
         final AsyncContext ctx = req.startAsync();
-        ctx.setTimeout(0);
 
         ctx.addListener(new AsyncListener() {
 
@@ -65,7 +72,9 @@ public class WherestagramServlet extends HttpServlet {
 
     }
 
-    
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    }
+
     @Override
     public void init() throws ServletException {
 
@@ -78,7 +87,7 @@ public class WherestagramServlet extends HttpServlet {
             @Override
             public void run() {
 
-                while (!Thread.currentThread().isInterrupted()) {
+                while (true) {
 
                     if (!Events.instance().isEmpty()) {
 
@@ -93,17 +102,18 @@ public class WherestagramServlet extends HttpServlet {
                                     try {
 
                                         HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
-                                        
+                                        PrintWriter writer = res.getWriter();
+
                                         res.setCharacterEncoding("utf-8");
                                         res.setStatus(HttpServletResponse.SC_OK);
                                         res.setContentType("application/json");
-                                        
-                                        PrintWriter writer = res.getWriter();
-                                        writer.write(message);
+
+                                        writer.print(message.length());
+                                        writer.print(';');
+                                        writer.print(message);
+                                        writer.print(';');
                                         writer.flush();
 
-                                        //ctx.complete();
-                                        
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -111,16 +121,15 @@ public class WherestagramServlet extends HttpServlet {
                                 }
 
                             }
-                        }); 
-                        
+                        });
                     } else {
-                        try { Thread.sleep(500); } catch (Exception e) { }
+                        try {
+                            Thread.sleep(500);
+                        } catch (Exception e) {
+                        }
                     }
-                    
                 }
             }
-            
         }).start();
     }
-	
 }
