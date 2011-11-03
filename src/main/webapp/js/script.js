@@ -1,15 +1,18 @@
 markers = new Array();
 
 poll = function() {
-    $.ajax({ 
-        url: "../async", 
-        dataType: "json", 
-        async: true, 
-        cache: false, 
-        timeout: 30000,
-        success: function(data) {
-            handleData(data);
-        } 
+    $.get("../async", function(data) {
+        $.ajax({ 
+            url: "../async", 
+            dataType: "json",
+            type: "POST",
+            async: true, 
+            cache: false, 
+            timeout: 30000,
+            success: function(data) {
+                handleData(data);
+            } 
+        });
     });
 }
 	
