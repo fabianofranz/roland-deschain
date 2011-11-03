@@ -97,12 +97,11 @@ public class WherestagramServlet extends HttpServlet {
                                         writer.write(message);
                                         writer.flush();
                                         
-                                        res.setContentType("text/plain");
                                         res.setCharacterEncoding("utf-8");
                                         res.setStatus(HttpServletResponse.SC_OK);
                                         res.setContentType("application/json");
 
-                                        ctx.complete();
+                                        //ctx.complete();
                                         
                                     } catch (IOException e) {
                                         e.printStackTrace();
