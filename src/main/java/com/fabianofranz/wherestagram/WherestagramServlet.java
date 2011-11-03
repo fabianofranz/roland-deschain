@@ -45,6 +45,7 @@ public class WherestagramServlet extends HttpServlet {
         writer.flush();
 
         final AsyncContext ctx = req.startAsync();
+        ctx.setTimeout(0);
 
         ctx.addListener(new AsyncListener() {
 
@@ -64,7 +65,7 @@ public class WherestagramServlet extends HttpServlet {
 
             @Override
             public void onComplete(AsyncEvent event) throws IOException {
-                ctxs.remove(ctx);
+                //ctxs.remove(ctx);
             }
         });
 
@@ -72,9 +73,6 @@ public class WherestagramServlet extends HttpServlet {
 
     }
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        
-    }
     
     @Override
     public void init() throws ServletException {
@@ -88,7 +86,7 @@ public class WherestagramServlet extends HttpServlet {
             @Override
             public void run() {
 
-                while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
 
                     if (!Events.instance().isEmpty()) {
 
@@ -102,11 +100,12 @@ public class WherestagramServlet extends HttpServlet {
 
                                     try {
 
-                                        PrintWriter writer = ctx.getResponse().getWriter();
-                                        writer.print(message.length());
-                                        writer.print(';');
-                                        writer.print(message);
-                                        writer.print(';');
+                                        HttpServletResponse res = (HttpServletResponse) ctx.getResponse();
+                                        PrintWriter writer = res.getWriter();
+                                        writer.write(message.length());
+                                        writer.write(';');
+                                        writer.write(message);
+                                        writer.write(';');
                                         writer.flush();
 
                                     } catch (IOException e) {
@@ -116,17 +115,16 @@ public class WherestagramServlet extends HttpServlet {
                                 }
 
                             }
-                        ;
+                        }); 
+                        
+                    } else {
+                        try { Thread.sleep(1000); } catch (Exception e) { }
                     }
-                
+                    
+                }
+            }
             
-        );
+        }).start();
     }
-}
-}
-
-		}).start();
-
-	}
 	
 }

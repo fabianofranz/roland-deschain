@@ -2,13 +2,9 @@ markers = new Array();
 
 poll = {
     listen: function() {
-        $.ajax({ url: "../async", 
-            dataType: "json",
-            timeout: 30000,
-            complete: poll.listen,
-            success: function(data) {
+        $.getJSON("../async", function(data) {
+               poll.listen();
                 handleData(data);
-            }
         });
     }
 }
