@@ -13,6 +13,8 @@ $(document).ready(function() {
         });
 
     var infoWindow = new google.maps.InfoWindow({});
+    
+    $.stream.setup({enableXDR: true});
 
     $.stream("../async", {
         type: "http",
