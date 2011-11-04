@@ -1,17 +1,75 @@
-markers = new Array();
+content = {
+    
+    map: null,
+    options: {
+        latitude: 40.778281,
+        longitude: -73.969878,
+        elementId: "map",
+        zoom: 14
+    },
+    keys: new Array(),
+    markers: new Array(),
+    tooltips: new Array(),
+    
+    setup: function() {
+        
+        var position = new google.maps.LatLng(content.options.latitude, content.options.longitude);
+        
+        map = new google.maps.Map(
+            document.getElementById(content.options.elementId), 
+            {
+                zoom: content.options.zoom,
+                center: position, 
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+    },
+    
+    addMarker: function(location) {
+        
+        marker = new google.maps.Marker({
+            position: location,
+            map: content.map
+        });
+        
+        content.markers.push(marker);
+        
+        return marker;
+    },
+    
+    clearMarkers: function() {
+        if (content.markers) for (i in content.markers) content.markers[i].setMap(null);
+    },
+    
+    deleteMarkers: function() {
+        content.clearMarkers();
+        content.markers.length = 0;
+    },
+    
+    addTooltip: function(data, marker) {
+        
+        tooltip = new google.maps.InfoWindow({});
+
+        tooltip.setContent(tmpl("info", { 
+            username: data.user.username, 
+            width: data.images.thumbnail.width, 
+            height: data.images.thumbnail.height, 
+            thumbnail: data.images.thumbnail.url }));
+
+        tooltip.open(content.map, marker);
+        
+        content.tooltips.push(tooltip);
+        
+        return tooltip;
+        
+     }
+     
+}
+
 	
 $(document).ready(function() {
-                    
-    var position = new google.maps.LatLng(40.778281, -73.969878);
     
-    var map = new google.maps.Map(
-        document.getElementById("map"), 
-        {
-            zoom: 14,
-            center: position, 
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-
+    content.setup();
+                    
     $.stream.setup({enableXDR: true});
 
     $.stream("../async", {
@@ -26,22 +84,17 @@ $(document).ready(function() {
                 if (update.object == "geography") {
                     $.getJSON("../details?object=" + update.object_id, function(instagrams) {
                         $.each(instagrams.data, function(index2, instagram) {
+                            
                             var key = instagram.user.username + ':' + instagram.location.latitude + ':' + instagram.location.longitude;
-                            if ($.inArray(key, markers) == -1) {
-                                markers.push(key);
-                                var p = new google.maps.LatLng(instagram.location.latitude, instagram.location.longitude);
-                                var marker = new google.maps.Marker({
-                                    position: p,
-                                    title: instagram.user.username
-                                });
-                                marker.setMap(map);
-                                var infoWindow = new google.maps.InfoWindow({});
-                                infoWindow.setContent(tmpl("info", { 
-                                    username: instagram.user.username, 
-                                    width: instagram.images.thumbnail.width, 
-                                    height: instagram.images.thumbnail.height, 
-                                    thumbnail: instagram.images.thumbnail.url }));
-                                infoWindow.open(map, marker);
+                            
+                            if ($.inArray(key, content.keys) == -1) {
+                                
+                                content.keys.push(key);
+                                
+                                marker = content.addMarker(new google.maps.LatLng(instagram.location.latitude, instagram.location.longitude));
+                                
+                                content.addTooltip(marker, instagram);
+                                
                             }
 
                         });
