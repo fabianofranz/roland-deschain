@@ -73,6 +73,9 @@ public class WherestagramServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        res.setContentType("text/plain");
+        res.setCharacterEncoding("utf-8");
+        res.setHeader("Access-Control-Allow-Origin", "*");
     }
 
     @Override
