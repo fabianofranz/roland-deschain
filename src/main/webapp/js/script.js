@@ -45,15 +45,15 @@ content = {
         content.markers.length = 0;
     },
     
-    addTooltip: function(data, marker) {
+    addTooltip: function(info, marker) {
         
         tooltip = new google.maps.InfoWindow({});
 
         tooltip.setContent(tmpl("info", { 
-            username: data.user.username, 
-            width: data.images.thumbnail.width, 
-            height: data.images.thumbnail.height, 
-            thumbnail: data.images.thumbnail.url }));
+            username: info.user.username, 
+            width: info.images.thumbnail.width, 
+            height: info.images.thumbnail.height, 
+            thumbnail: info.images.thumbnail.url }));
 
         tooltip.open(content.map, marker);
         
