@@ -15,7 +15,7 @@ content = {
         
         var position = new google.maps.LatLng(content.options.latitude, content.options.longitude);
         
-        map = new google.maps.Map(
+        content.map = new google.maps.Map(
             document.getElementById(content.options.elementId), 
             {
                 zoom: content.options.zoom,
@@ -24,10 +24,10 @@ content = {
             });
     },
     
-    addMarker: function(location) {
+    addMarker: function(latitude, longitude) {
         
         marker = new google.maps.Marker({
-            position: location,
+            position: new google.maps.LatLng(latitude, longitude),
             map: content.map
         });
         
@@ -91,7 +91,7 @@ $(document).ready(function() {
                                 
                                 content.keys.push(key);
                                 
-                                marker = content.addMarker(new google.maps.LatLng(instagram.location.latitude, instagram.location.longitude));
+                                marker = content.addMarker(instagram.location.latitude, instagram.location.longitude);
                                 
                                 content.addTooltip(marker, 
                                     instagram.user.username, 
