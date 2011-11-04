@@ -41,7 +41,10 @@ public class WherestagramServlet extends HttpServlet {
         res.setHeader("Access-Control-Allow-Origin", "*");
 
         PrintWriter writer = res.getWriter();
-        writer.print("2;Hi;");
+        writer.print(UUID.randomUUID().toString());
+        writer.print(';');
+        for (int i = 0; i < 1024; i++) writer.print(' ');
+        writer.print(';');
         writer.flush();
 
         final AsyncContext ctx = req.startAsync();
@@ -109,7 +112,7 @@ public class WherestagramServlet extends HttpServlet {
 
                                         res.setCharacterEncoding("utf-8");
                                         res.setStatus(HttpServletResponse.SC_OK);
-                                        res.setContentType("application/json");
+                                        res.setContentType("text/plain");
 
                                         writer.print(message.length());
                                         writer.print(';');
