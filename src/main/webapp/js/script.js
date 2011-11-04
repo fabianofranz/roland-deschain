@@ -2,7 +2,7 @@ markers = new Array();
 	
 $(document).ready(function() {
                     
-    var position = new google.maps.LatLng(37.774947, -122.419414);
+    var position = new google.maps.LatLng(40.778281, -73.969878);
     
     var map = new google.maps.Map(
         document.getElementById("map"), 
@@ -12,8 +12,6 @@ $(document).ready(function() {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-    var infoWindow = new google.maps.InfoWindow({});
-    
     $.stream.setup({enableXDR: true});
 
     $.stream("../async", {
@@ -37,6 +35,7 @@ $(document).ready(function() {
                                     title: instagram.user.username
                                 });
                                 marker.setMap(map);
+                                var infoWindow = new google.maps.InfoWindow({});
                                 infoWindow.setContent(tmpl("info", { 
                                     username: instagram.user.username, 
                                     width: instagram.images.thumbnail.width, 

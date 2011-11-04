@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author fabianofranz
  */
-@WebServlet(name = "Servlet3AsyncTest", value = "/async", asyncSupported = true)
+@WebServlet(name = "WherestagramServlet", value = "/async", asyncSupported = true)
 public class WherestagramServlet extends HttpServlet {
 
     private final Executor executor = Executors.newFixedThreadPool(10);
