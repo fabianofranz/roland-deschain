@@ -45,15 +45,15 @@ content = {
         content.markers.length = 0;
     },
     
-    addTooltip: function(info, marker) {
+    addTooltip: function(marker, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
         
         tooltip = new google.maps.InfoWindow({});
 
         tooltip.setContent(tmpl("info", { 
-            username: info.user.username, 
-            width: info.images.thumbnail.width, 
-            height: info.images.thumbnail.height, 
-            thumbnail: info.images.thumbnail.url }));
+            username: username, 
+            width: thumbnailWidth, 
+            height: thumbnailHeight, 
+            thumbnail: thumbnailUrl }));
 
         tooltip.open(content.map, marker);
         
@@ -93,7 +93,11 @@ $(document).ready(function() {
                                 
                                 marker = content.addMarker(new google.maps.LatLng(instagram.location.latitude, instagram.location.longitude));
                                 
-                                content.addTooltip(marker, instagram);
+                                content.addTooltip(marker, 
+                                    instagram.user.username, 
+                                    instagram.images.thumbnail.width, 
+                                    instagram.images.thumbnail.height, 
+                                    instagram.images.thumbnail.url);
                                 
                             }
 
