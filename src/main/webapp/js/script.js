@@ -61,6 +61,22 @@ content = {
         
         return tooltip;
         
+     },
+     
+     addItem: function(latitude, longitude, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
+         
+        var key = username + ':' + latitude + ':' + longitude;
+
+        if ($.inArray(key, content.keys) == -1) {
+
+            content.keys.push(key);
+
+            marker = content.addMarker(latitude, longitude);
+
+            content.addTooltip(marker, username, thumbnailWidth, thumbnailHeight, thumbnailUrl);
+
+        }
+         
      }
      
 }
@@ -85,22 +101,13 @@ $(document).ready(function() {
                     $.getJSON("../details?object=" + update.object_id, function(instagrams) {
                         $.each(instagrams.data, function(index2, instagram) {
                             
-                            var key = instagram.user.username + ':' + instagram.location.latitude + ':' + instagram.location.longitude;
-                            
-                            if ($.inArray(key, content.keys) == -1) {
+                            content.addItem(instagram.location.latitude, 
+                                instagram.location.longitude,
+                                instagram.user.username, 
+                                instagram.images.thumbnail.width, 
+                                instagram.images.thumbnail.height, 
+                                instagram.images.thumbnail.url);
                                 
-                                content.keys.push(key);
-                                
-                                marker = content.addMarker(instagram.location.latitude, instagram.location.longitude);
-                                
-                                content.addTooltip(marker, 
-                                    instagram.user.username, 
-                                    instagram.images.thumbnail.width, 
-                                    instagram.images.thumbnail.height, 
-                                    instagram.images.thumbnail.url);
-                                
-                            }
-
                         });
                     });
                 }
