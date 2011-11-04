@@ -47,13 +47,15 @@ content = {
     
     addTooltip: function(marker, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
         
+        content.closeTooltips();
+        
         tooltip = new google.maps.InfoWindow({});
 
         tooltip.setContent(tmpl("info", { 
             username: username, 
             width: thumbnailWidth, 
             height: thumbnailHeight, 
-            thumbnail: thumbnailUrl }));
+            thumbnail: thumbnailUrl}));
 
         tooltip.open(content.map, marker);
         
@@ -61,6 +63,10 @@ content = {
         
         return tooltip;
         
+     },
+     
+     closeTooltips: function() {
+        if (content.tooltips) for (i in content.tooltips) content.tooltips[i].close();
      },
      
      addItem: function(latitude, longitude, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
