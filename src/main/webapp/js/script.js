@@ -3,6 +3,7 @@ content = {
     map: null,
     tooltip: null,
     options: {
+        play: true,
         latitude: 40.778281,
         longitude: -73.969878,
         elementId: "map",
@@ -42,8 +43,8 @@ content = {
             marker.setTitle(item.id);
             item.marker = marker;
             content.items[item.id] = item;
-            google.maps.event.addListener(marker, "click", function(event) {
-                showItem(marker.getTitle());
+            google.maps.event.addListener(marker, "click", function() {
+                content.showItem(marker.getTitle());
             });
         }
     },
@@ -100,7 +101,7 @@ $(document).ready(function() {
                             }
                             
                             content.addItem(item);
-                            content.showItem(item.id);
+                            if (content.options.play) content.showItem(item.id);
                                 
                         });
                     });
