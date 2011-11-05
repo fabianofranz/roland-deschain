@@ -23,7 +23,7 @@ content = {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
             
-        tooltip = new google.maps.InfoWindow({});
+        content.tooltip = new google.maps.InfoWindow({ maxWidth: 250 });
         
     },
     
@@ -52,8 +52,8 @@ content = {
     showItem: function(id) {
         item = content.items[id];
         if (item != null) {
-            tooltip.setContent(tmpl("info", item.data));
-            tooltip.open(content.map, item.marker);
+            content.tooltip.setContent(tmpl("info", item.data));
+            content.tooltip.open(content.map, item.marker);
         }
     }
      
