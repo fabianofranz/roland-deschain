@@ -38,8 +38,13 @@ content = {
     
     addItem: function(item) {
         if (content.items[item.id] == null) {
-            item.marker = content.addMarker(item.data.latitude, item.data.longitude);
+            marker = content.addMarker(item.data.latitude, item.data.longitude);
+            marker.setTitle(item.id);
+            item.marker = marker;
             content.items[item.id] = item;
+            google.maps.event.addListener(marker, "click", function(event) {
+                showItem(marker.getTitle());
+            });
         }
     },
     

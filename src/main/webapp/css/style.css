@@ -255,6 +255,7 @@ span.roland { color: #c06a45; }
 span.javaee6 { color: #03eba6; }*/
 
 div.info { text-align: center; }
+div.info div.user, div.info div.caption { margin: 3px; }
 div.info span.username { font-weight: bold; color: #c06a45; }
 div.info img { border: 1px solid #c06a45; }
 
