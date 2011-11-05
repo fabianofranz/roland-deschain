@@ -41,6 +41,9 @@
         <div class="info">
             <div class="user"><span class="username"><%=username%></span> just saw</div>
             <a href="<%=url%>" target="_blank"><img style="width:<%=thumbnailWidth%>px;height:<%=thumbnailHeight%>px;" src="<%=thumbnailUrl%>" /></a>
+            <% if (caption != null) { %>
+                <div class="caption"><%=caption%></div>
+            <% } %>
         </div>
     </script>
 

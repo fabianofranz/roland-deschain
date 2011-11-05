@@ -8,8 +8,7 @@ content = {
         elementId: "map",
         zoom: 14
     },
-    ids: new Array(),
-    markers: new Array(),
+    items: {},
     
     setup: function() {
         
@@ -34,32 +33,23 @@ content = {
             map: content.map
         });
         
-        content.markers.push(marker);
-        
         return marker;
     },
     
-    clearMarkers: function() {
-        if (content.markers) for (i in content.markers) content.markers[i].setMap(null);
-    },
-    
-    deleteMarkers: function() {
-        content.clearMarkers();
-        content.markers.length = 0;
-    },
-    
-     showItem: function(item) {
-         
-        if ($.inArray(item.id, content.ids) == -1) {
-
-            content.ids.push(item.id);
-            marker = content.addMarker(item.data.latitude, item.data.longitude);
-            tooltip.setContent(tmpl("info", item.data));
-            tooltip.open(content.map, marker);
-        
+    addItem: function(item) {
+        if (content.items[item.id] == null) {
+            item.marker = content.addMarker(item.data.latitude, item.data.longitude);
+            content.items[item.id] = item;
         }
-         
-     }
+    },
+    
+    showItem: function(id) {
+        item = content.items[id];
+        if (item != null) {
+            tooltip.setContent(tmpl("info", item.data));
+            tooltip.open(content.map, item.marker);
+        }
+    }
      
 }
 
@@ -82,15 +72,15 @@ $(document).ready(function() {
         
         message: function(event) {
             
-            $.each(event.data, function(index1, update) { 
+            $.each(event.data, function(i1, update) { 
                 
                 if (update.object == "geography") {
                     
                     $.getJSON("../details?object=" + update.object_id, function(instagrams) {
                         
-                        $.each(instagrams.data, function(index2, instagram) {
+                        $.each(instagrams.data, function(i2, instagram) {
                             
-                            content.showItem({ 
+                            item = { 
                                 id: instagram.id,
                                 data: {
                                     latitude: instagram.location.latitude, 
@@ -99,9 +89,13 @@ $(document).ready(function() {
                                     thumbnailWidth: instagram.images.thumbnail.width, 
                                     thumbnailHeight: instagram.images.thumbnail.height, 
                                     thumbnailUrl: instagram.images.thumbnail.url,
+                                    caption: instagram.caption == null ? null : instagram.caption.text,
                                     url: instagram.link
                                 }
-                            });
+                            }
+                            
+                            content.addItem(item);
+                            content.showItem(item.id);
                                 
                         });
                     });
