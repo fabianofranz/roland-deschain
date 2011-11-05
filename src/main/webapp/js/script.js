@@ -1,15 +1,15 @@
 content = {
     
     map: null,
+    tooltip: null,
     options: {
         latitude: 40.778281,
         longitude: -73.969878,
         elementId: "map",
         zoom: 14
     },
-    keys: new Array(),
+    ids: new Array(),
     markers: new Array(),
-    tooltips: new Array(),
     
     setup: function() {
         
@@ -22,6 +22,9 @@ content = {
                 center: position, 
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             });
+            
+        tooltip = new google.maps.InfoWindow({});
+        
     },
     
     addMarker: function(latitude, longitude) {
@@ -45,42 +48,15 @@ content = {
         content.markers.length = 0;
     },
     
-    addTooltip: function(marker, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
-        
-        content.closeTooltips();
-        
-        tooltip = new google.maps.InfoWindow({});
-
-        tooltip.setContent(tmpl("info", { 
-            username: username, 
-            width: thumbnailWidth, 
-            height: thumbnailHeight, 
-            thumbnail: thumbnailUrl}));
-
-        tooltip.open(content.map, marker);
-        
-        content.tooltips.push(tooltip);
-        
-        return tooltip;
-        
-     },
-     
-     closeTooltips: function() {
-        if (content.tooltips) for (i in content.tooltips) content.tooltips[i].close();
-     },
-     
-     addItem: function(latitude, longitude, username, thumbnailWidth, thumbnailHeight, thumbnailUrl) {
+     showItem: function(item) {
          
-        var key = username + ':' + latitude + ':' + longitude;
+        if ($.inArray(item.id, content.ids) == -1) {
 
-        if ($.inArray(key, content.keys) == -1) {
-
-            content.keys.push(key);
-
-            marker = content.addMarker(latitude, longitude);
-
-            content.addTooltip(marker, username, thumbnailWidth, thumbnailHeight, thumbnailUrl);
-
+            content.ids.push(item.id);
+            marker = content.addMarker(item.data.latitude, item.data.longitude);
+            tooltip.setContent(tmpl("info", item.data));
+            tooltip.open(content.map, marker);
+        
         }
          
      }
@@ -95,35 +71,52 @@ $(document).ready(function() {
     $.stream.setup({enableXDR: true});
 
     $.stream("../async", {
+        
         type: "http",
         dataType: "json",
         context: $("#map")[0],
+        
         open: function(event, stream) {
             stream.send({});
         },
+        
         message: function(event) {
+            
             $.each(event.data, function(index1, update) { 
+                
                 if (update.object == "geography") {
+                    
                     $.getJSON("../details?object=" + update.object_id, function(instagrams) {
+                        
                         $.each(instagrams.data, function(index2, instagram) {
                             
-                            content.addItem(instagram.location.latitude, 
-                                instagram.location.longitude,
-                                instagram.user.username, 
-                                instagram.images.thumbnail.width, 
-                                instagram.images.thumbnail.height, 
-                                instagram.images.thumbnail.url);
+                            content.showItem({ 
+                                id: instagram.id,
+                                data: {
+                                    latitude: instagram.location.latitude, 
+                                    longitude: instagram.location.longitude,
+                                    username: instagram.user.username, 
+                                    thumbnailWidth: instagram.images.thumbnail.width, 
+                                    thumbnailHeight: instagram.images.thumbnail.height, 
+                                    thumbnailUrl: instagram.images.thumbnail.url,
+                                    url: instagram.link
+                                }
+                            });
                                 
                         });
                     });
                 }
             });
+            
         },
+        
         error: function() {
             alert("error");
         },
+        
         close: function() {
         }
+        
     });
 	                   
 });
