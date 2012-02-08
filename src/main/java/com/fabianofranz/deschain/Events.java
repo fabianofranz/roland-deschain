@@ -1,4 +1,4 @@
-package com.fabianofranz.wherestagram;
+package com.fabianofranz.deschain;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
