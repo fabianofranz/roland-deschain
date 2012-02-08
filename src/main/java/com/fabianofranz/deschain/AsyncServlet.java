@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Fabiano Franz
  */
 @WebServlet(name = "AsyncServlet", value = "/async", asyncSupported = true)
-public class WherestagramServlet extends HttpServlet {
+public class AsyncServlet extends HttpServlet {
 
     private final Executor executor = Executors.newFixedThreadPool(10);
     private List<AsyncContext> ctxs = new ArrayList<AsyncContext>();
