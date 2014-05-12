@@ -23,12 +23,12 @@ public class Server extends Verticle {
 
         req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
 
-	if (request.path().equals("/hello")) {
-          request.response().end("Hello from Java !!!");
+	if (req.path().equals("/hello")) {
+          req.response().end("Hello from Java !!!");
 
         } else {
-          String file = request.path().equals("/") ? "index.html" : request.path();
-          request.response().sendFile("webroot/" + file);
+          String file = req.path().equals("/") ? "index.html" : request.path();
+          req.response().sendFile("webroot/" + file);
         }
 
       }
