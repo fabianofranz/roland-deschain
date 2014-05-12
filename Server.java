@@ -27,7 +27,7 @@ public class Server extends Verticle {
           req.response().end("Hello from Java !!!");
 
         } else {
-          String file = req.path().equals("/") ? "index.html" : request.path();
+          String file = req.path().equals("/") ? "index.html" : req.path();
           req.response().sendFile("webroot/" + file);
         }
 
