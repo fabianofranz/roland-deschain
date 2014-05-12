@@ -13,6 +13,7 @@ import org.vertx.java.core.sockjs.SockJSSocket;
 import org.vertx.java.core.eventbus.EventBus;
 import java.lang.Thread;
 import java.lang.Runnable;
+import java.lang.InterruptedException;
  
 public class Server extends Verticle {
  
@@ -48,10 +49,9 @@ public class Server extends Verticle {
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
-
     new Thread(new Runnable() {          
         public void run() {              
-          try { Thread.sleep(15 * 1000); } catch (InterruptedException ex) { }
+          try { Thread.sleep(15 * 1000); } catch (InterruptedException e) { }
           eb.publish("MyChannel", "Hello World");
         }
     }).start();
