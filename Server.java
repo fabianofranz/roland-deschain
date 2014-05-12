@@ -3,7 +3,6 @@ import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.buffer.Buffer;
 import org.vertx.java.core.http.HttpServer;
 import org.vertx.java.core.http.HttpServerRequest;
-import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.SockJSServer;
 import org.vertx.java.core.sockjs.SockJSSocket;
 import org.vertx.java.platform.Verticle;
@@ -12,6 +11,8 @@ import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.EventBusBridgeHook;
 import org.vertx.java.core.sockjs.SockJSSocket;
 import org.vertx.java.core.eventbus.EventBus;
+import java.lang.Thread;
+import java.lang.Runnable;
  
 public class Server extends Verticle {
  
