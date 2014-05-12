@@ -10,6 +10,7 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.EventBusBridgeHook;
 import org.vertx.java.core.sockjs.SockJSSocket;
+import org.vertx.java.core.eventbus.EventBus;
 import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
@@ -17,6 +18,8 @@ import java.lang.InterruptedException;
 public class Server extends Verticle {
  
   public void start() {
+
+    EventBus eb = vertx.eventBus();
 
     HttpServer httpServer = vertx.createHttpServer();
     httpServer.setCompressionSupported(true);
