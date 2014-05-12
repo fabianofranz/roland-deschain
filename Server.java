@@ -50,9 +50,11 @@ public class Server extends Verticle {
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
     new Thread(new Runnable() {          
-        public void run() {              
-          try { Thread.sleep(15 * 1000); } catch (InterruptedException e) { }
-          eb.publish("MyChannel", "Hello World");
+        public void run() {
+          while (true) {
+            try { Thread.sleep(15 * 1000); } catch (InterruptedException e) { }
+            eb.publish("MyChannel", "Hello World");
+          }
         }
     }).start();
 
