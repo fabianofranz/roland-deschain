@@ -30,7 +30,7 @@ public class Server extends Verticle {
 
         req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
 
-	if (req.path().equals("/hello")) {
+      	if (req.path().equals("/hello")) {
           req.response().end("Hello from Java !!!");
 
         } else {
