@@ -8,28 +8,36 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/vertx/2.0.0/vertxbus.min.js"></script>
   <script>
-    var eb = new vertx.EventBus(
-        window.location.protocol + '//' +
-        window.location.hostname + ':' +
-        8000 + '/event');
+    $(document).ready(function() {
+      eb = new vertx.EventBus(
+          window.location.protocol + '//' +
+          window.location.hostname + ':' +
+          8000 + '/event');
 
-    eb.onopen = function() {
-      console.log('open');
-    };
-    eb.onmessage = function(e) {
-      console.log('message', e.data);
-      alert('received message echoed from server: ' + e.data);
-    };
-    eb.onclose = function() {
-      console.log('close');
-    };
+      eb.onopen = function() {
+        console.log('open');
+      };
+
+      eb.onmessage = function(e) {
+        console.log('message', e.data);
+      };
+
+      eb.onclose = function() {
+        console.log('close');
+      };
+
+      eb.registerHandler("MyChannel", function(msg, replyTo) {
+        console.log("Address: " + address + " Message: " + msg.text);
+      });
+
+    });
 
     function send(message) {
-      if (eb.readyState === SockJS.OPEN) {
+      if (eb) {
         console.log("sending message")
-        eb.send(message);
+        eb.publish("MyChannel", {text: message});
       } else {
-        console.log("The socket is not open.");
+        console.log("eb not opened")
       }
     }
   </script>
