@@ -10,7 +10,6 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.EventBusBridgeHook;
 import org.vertx.java.core.sockjs.SockJSSocket;
-import org.vertx.java.core.eventbus.EventBus;
 import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
@@ -18,8 +17,6 @@ import java.lang.InterruptedException;
 public class Server extends Verticle {
  
   public void start() {
-
-    EventBus eb = vertx.eventBus();
 
     HttpServer httpServer = vertx.createHttpServer();
     httpServer.setCompressionSupported(true);
@@ -48,13 +45,6 @@ public class Server extends Verticle {
     inbound.add(new JsonObject().putString("address", "MyChannel"));
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
-
-    new Thread(new Runnable() {          
-        public void run() {              
-          try { Thread.sleep(15 * 1000); } catch (InterruptedException e) { }
-          eb.publish("MyChannel", "Hello World");
-        }
-    }).start();
 
     int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
     String ip = System.getenv("OPENSHIFT_VERTX_IP");
