@@ -16,19 +16,15 @@
 
       eb.onopen = function() {
         console.log('open');
-      };
-
-      eb.onmessage = function(e) {
-        console.log('message', e.data);
-      };
+        eb.registerHandler('MyChannel', function(message) {
+          console.log('received a message: ' + JSON.stringify(message));
+        });
+        //eb.send('some-address', {name: 'tim', age: 587});
+      });
 
       eb.onclose = function() {
         console.log('close');
       };
-
-      eb.registerHandler("MyChannel", function(msg, replyTo) {
-        console.log("Address: " + address + " Message: " + msg.text);
-      });
 
     });
 

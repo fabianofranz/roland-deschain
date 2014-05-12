@@ -11,17 +11,23 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.EventBusBridgeHook;
 import org.vertx.java.core.sockjs.SockJSSocket;
+import org.vertx.java.core.eventbus.EventBus;
  
 public class Server extends Verticle {
  
   public void start() {
 
-    HttpServer server = vertx.createHttpServer();
+    EventBus eb = vertx.eventBus();
 
-    server.requestHandler(new Handler<HttpServerRequest>() {
+    HttpServer httpServer = vertx.createHttpServer();
+    httpServer.setCompressionSupported(true);
+
+    // TODO RouteMatcher routeMatcher = new RouteMatcher();
+
+    httpServer.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
-      	if (req.path().equals("/hello")) {
+      	if (req.path().equals("/instagram")) {
           req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
           req.response().end("Hello from Java !!!");
 
@@ -34,23 +40,24 @@ public class Server extends Verticle {
       }
     });
 
-    JsonArray permitted = new JsonArray();
-    permitted.add(new JsonObject()); // Let everything through
-    SockJSServer sockJSServer = vertx.createSockJSServer(server);
-    sockJSServer.setHook(new EventBusBridgeHook() { 
-      public boolean handleSocketCreated(SockJSSocket sock) { return true; }
-      public void handleSocketClosed(SockJSSocket sock) { }
-      public boolean handleSendOrPub(SockJSSocket sock, boolean send, JsonObject msg, String address) { return true; }
-      public boolean handlePreRegister(SockJSSocket sock, String address) { return true; }
-      public void handlePostRegister(SockJSSocket sock, String address) { }
-      public boolean handleUnregister(SockJSSocket sock, String address) { return true; }
-      public boolean handleAuthorise(JsonObject message, String sessionID, Handler<AsyncResult<Boolean>> handler) { return false; }
-    });
-    sockJSServer.bridge(new JsonObject().putString("prefix", "/event"), permitted, permitted);
+    JsonObject config = new JsonObject().putString("prefix", "/event");
+    JsonArray inbound = new JsonArray();
+    JsonArray outbound = new JsonArray();
+    inbound.add(new JsonObject().putString("address", "MyChannel"));
+    outbound.add(new JsonObject().putString("address", "MyChannel"));
+    vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
+
+
+    new Thread(new Runnable() {          
+        public void run() {              
+          try { Thread.sleep(15 * 1000); } catch (InterruptedException ex) { }
+          eb.publish("MyChannel", "Hello World");
+        }
+    }).start();
 
     int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
     String ip = System.getenv("OPENSHIFT_VERTX_IP");
-    server.listen(port, ip);
+    httpServer.listen(port, ip);
 
   }
 }
