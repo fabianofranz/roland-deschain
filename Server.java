@@ -6,34 +6,26 @@ import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.SockJSServer;
 import org.vertx.java.core.sockjs.SockJSSocket;
 import org.vertx.java.platform.Verticle;
- 
-import java.util.Map;
+import org.vertx.java.core.json.JsonArray;
+import org.vertx.java.core.json.JsonObject;
+import org.vertx.java.core.sockjs.EventBusBridgeHook;
+import org.vertx.java.core.sockjs.SockJSSocket;
  
 public class Server extends Verticle {
  
   public void start() {
-
-    int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
-    String ip = System.getenv("OPENSHIFT_VERTX_IP");
 
     HttpServer server = vertx.createHttpServer();
 
     server.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
-        System.out.println("Got request: " + req.uri());
-        System.out.println("Headers are: ");
-
-        for (Map.Entry<String, String> entry : req.headers()) {
-          System.out.println(entry.getKey() + ":" + entry.getValue());
-        }
-
-        req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
-
       	if (req.path().equals("/hello")) {
+          req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
           req.response().end("Hello from Java !!!");
 
         } else {
+          req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
           String file = req.path().equals("/") ? "index.html" : req.path();
           req.response().sendFile("webroot/" + file);
         }
@@ -41,17 +33,22 @@ public class Server extends Verticle {
       }
     });
 
-    SockJSServer sockServer = vertx.createSockJSServer(server);
-    sockServer.installApp(new JsonObject().putString("prefix", "/event"), new Handler<SockJSSocket>() {
-      public void handle(final SockJSSocket sock) {
-        sock.dataHandler(new Handler<Buffer>() {
-          public void handle(Buffer data) {
-            sock.write(data); // Echo it back
-          }
-        });
-      }
+    JsonArray permitted = new JsonArray();
+    permitted.add(new JsonObject()); // Let everything through
+    SockJSServer sockJSServer = vertx.createSockJSServer(server);
+    sockJSServer.setHook(new EventBusBridgeHook() { 
+      public boolean handleSocketCreated(SockJSSocket sock) { return true; }
+      public void handleSocketClosed(SockJSSocket sock) { }
+      public boolean handleSendOrPub(SockJSSocket sock, boolean send, JsonObject msg, String address) { return true; }
+      public boolean handlePreRegister(SockJSSocket sock, String address) { return true; }
+      public void handlePostRegister(SockJSSocket sock, String address) { }
+      public boolean handleUnregister(SockJSSocket sock, String address) { return true; }
+      public boolean handleAuthorise(JsonObject message, String sessionID, Handler<AsyncResult<Boolean>> handler) { return false; }
     });
+    sockJSServer.bridge(new JsonObject().putString("prefix", "/event"), permitted, permitted);
 
+    int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
+    String ip = System.getenv("OPENSHIFT_VERTX_IP");
     server.listen(port, ip);
 
   }
