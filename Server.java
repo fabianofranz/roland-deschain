@@ -49,6 +49,12 @@ public class Server extends Verticle {
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
+    new Thread(new Runnable() {          
+        public void run() {              
+          eb.publish("MyChannel", "Hello World");
+        }
+    }).start();
+
     int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
     String ip = System.getenv("OPENSHIFT_VERTX_IP");
     httpServer.listen(port, ip);
