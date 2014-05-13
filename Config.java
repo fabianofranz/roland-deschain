@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 
 public class Config {
@@ -43,7 +44,9 @@ public class Config {
   }
 
   static public void configure() {
-    Files.copy(new File("locations.json").toPath(), new File(configFile()).toPath());
+    try {
+      Files.copy(new File("locations.json").toPath(), new File(configFile()).toPath());
+    } catch (IOException e) { }
   }
 
   static public String get(String envVarName) {
