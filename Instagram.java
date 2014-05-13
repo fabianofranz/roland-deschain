@@ -9,7 +9,7 @@ public class Instagram {
   static private final String INSTAGRAM_API_ENDPOINT = "/v1/subscriptions/" 
   static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
 
-  static public void requestSubscriptionToGeography(Long latitude, Long longitude, Integer radius) {
+  static public void requestSubscriptionToGeography(Double latitude, Double longitude, Integer radius) {
     String url = new StringBuilder().
       append(INSTAGRAM_API_HOST).
       append(INSTAGRAM_API_ENDPOINT).
