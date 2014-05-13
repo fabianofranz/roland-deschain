@@ -50,7 +50,7 @@ public class Server extends Verticle {
         } else {
           req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
           String file = req.path().equals("/") ? "index.html" : req.path();
-          req.response().sendFile("webroot/" + file);
+          req.response().sendFile("web/" + file);
         }
 
       }
