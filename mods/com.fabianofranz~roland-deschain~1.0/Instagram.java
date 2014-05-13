@@ -24,7 +24,7 @@ public class Instagram {
           add("lat", latitude.toString()).
           add("lng", longitude.toString()).
           add("radius", radius.toString()).
-          add("callback_url", encode(CALLBACK_URL)).build()).
+          add("callback_url", CALLBACK_URL).build()).
         execute().returnContent().asString();
       System.out.println("requestSubscribeToGeography returned: " + response);
     } catch (Exception e) {
