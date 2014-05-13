@@ -32,8 +32,10 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
 
       	if (req.path().equals("/instagram/event")) {
+          System.out.println("/instagram/event received!");
 
           if ("GET".equals(req.method())) {
+            System.out.println("GET received!");
             String mode = req.params().get("hub.mode");
             String challenge = req.params().get("hub.challenge");
             String token = req.params().get("hub.verify_token");
