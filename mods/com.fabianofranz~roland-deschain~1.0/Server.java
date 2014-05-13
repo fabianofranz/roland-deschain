@@ -44,6 +44,12 @@ public class Server extends Verticle {
             req.response().end(challenge);
 
           } else if ("POST".equals(req.method())) {
+            req.bodyHandler(new Handler<Buffer>() {
+              public void handle(Buffer body) {
+                eb.publish("MyChannel", body);
+              }
+            });
+            req.response().end();
           }
 
         } else {
@@ -63,22 +69,9 @@ public class Server extends Verticle {
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
-    System.out.println("Going to listen...");
-
     httpServer.listen(Config.serverPort(), Config.serverIp());
 
-    System.out.println("Listening!");
-
     setup();
-
-    new Thread(new Runnable() {          
-        public void run() {
-          while (true) {
-            try { Thread.sleep(15 * 1000); } catch (InterruptedException e) { }
-            eb.publish("MyChannel", "Hello World");
-          }
-        }
-    }).start();
 
   }
 

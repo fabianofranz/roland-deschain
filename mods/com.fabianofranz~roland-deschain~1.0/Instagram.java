@@ -35,6 +35,10 @@ public class Instagram {
     }
   }
 
+  static public void unsubscribeEverything() {
+
+  }
+
   static private String encode(String s) {
     try {
       return URLEncoder.encode(s, "UTF-8");
