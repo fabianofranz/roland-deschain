@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Beira-Rio (Porto Alegre)",
+    "latitude": 35.657872,
+    "longitude": 139.70232,
+    "radius": 1000
+  },
+  {
+    "id": 2,
+    "name": "Outro Estadio (Teste)",
+    "latitude": 35.657872,
+    "longitude": 139.70232,
+    "radius": 1000
+  }
+]
