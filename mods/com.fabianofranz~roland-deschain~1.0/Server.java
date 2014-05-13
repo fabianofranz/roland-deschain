@@ -29,8 +29,9 @@ public class Server extends Verticle {
     httpServer.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
+        System.out.println("Handling " req.method() + ": " + req.path());
+
       	if (req.path().equals("/instagram/event")) {
-          System.out.println("/instagram/event received!");
 
           if ("GET".equals(req.method())) {
             System.out.println("GET received!");
