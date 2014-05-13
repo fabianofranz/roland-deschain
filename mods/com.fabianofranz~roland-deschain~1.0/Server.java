@@ -29,12 +29,11 @@ public class Server extends Verticle {
     httpServer.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
-        System.out.println("Handling " req.method() + ": " + req.path());
+        System.out.println("Handling " + req.method() + ": " + req.path());
 
       	if (req.path().equals("/instagram/event")) {
 
           if ("GET".equals(req.method())) {
-            System.out.println("GET received!");
             String mode = req.params().get("hub.mode");
             String challenge = req.params().get("hub.challenge");
             String token = req.params().get("hub.verify_token");
@@ -45,7 +44,6 @@ public class Server extends Verticle {
             req.response().end("Verified");
 
           } else if ("POST".equals(req.method())) {
-            System.out.println("POST received!");
           }
 
         } else {
