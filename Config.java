@@ -19,7 +19,7 @@ public class Config {
   static public String get(String[] envVarNames, String defaultValue) {
     for (int i = 0; i < envVarNames.length; i++) {
       String value = System.getenv(envVarNames[i]);
-      if value != null return value;
+      if (value != null) return value;
     }
     return defaultValue;
   }
@@ -33,8 +33,7 @@ public class Config {
   }
 
   static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
-    String value = get(envVarNames, defaultValue == null ? null : defaultValue.toString());
-    return value == null ? defaultValue : Integer.parseInt(value);
+    return Integer.parseInt(get(envVarNames, defaultValue == null ? null : defaultValue.toString()));
   }
 
 }
