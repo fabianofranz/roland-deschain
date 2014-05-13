@@ -59,8 +59,8 @@ public class Server extends Verticle {
         }
     }).start();
 
-    int port = Integer.parseInt(Env.get("OPENSHIFT_VERTX_PORT"));
-    String ip = Env.get("OPENSHIFT_VERTX_IP");
+    int port = Config.getInteger("OPENSHIFT_VERTX_PORT");
+    String ip = Config.get("OPENSHIFT_VERTX_IP");
     httpServer.listen(port, ip);
 
   }
