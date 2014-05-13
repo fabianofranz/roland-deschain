@@ -14,6 +14,7 @@ import org.vertx.java.core.eventbus.EventBus;
 import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
+import java.Env;
  
 public class Server extends Verticle {
  
@@ -43,9 +44,9 @@ public class Server extends Verticle {
     });
 
     JsonObject config = new JsonObject().putString("prefix", "/event");
-    JsonArray inbound = new JsonArray();
+    JsonArray inbound = new JsonArray(); //nothing
     JsonArray outbound = new JsonArray();
-    inbound.add(new JsonObject());
+    //inbound.add(new JsonObject()); //everything
     //inbound.add(new JsonObject().putString("address", "MyChannel"));
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
@@ -59,8 +60,8 @@ public class Server extends Verticle {
         }
     }).start();
 
-    int port = Integer.parseInt(System.getenv("OPENSHIFT_VERTX_PORT"));
-    String ip = System.getenv("OPENSHIFT_VERTX_IP");
+    int port = Integer.parseInt(Env.get("OPENSHIFT_VERTX_PORT"));
+    String ip = Env.get("OPENSHIFT_VERTX_IP");
     httpServer.listen(port, ip);
 
   }
