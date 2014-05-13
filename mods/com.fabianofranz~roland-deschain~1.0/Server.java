@@ -19,8 +19,6 @@ public class Server extends Verticle {
  
   public void start() {
 
-    setup();
-
     final EventBus eb = vertx.eventBus();
 
     HttpServer httpServer = vertx.createHttpServer();
@@ -66,6 +64,10 @@ public class Server extends Verticle {
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
+    httpServer.listen(Config.serverPort(), Config.serverIp());
+
+    setup();
+
     new Thread(new Runnable() {          
         public void run() {
           while (true) {
@@ -74,8 +76,6 @@ public class Server extends Verticle {
           }
         }
     }).start();
-
-    httpServer.listen(Config.serverPort(), Config.serverIp());
 
   }
 
