@@ -64,7 +64,11 @@ public class Server extends Verticle {
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
+    System.out.println("Going to listen...");
+
     httpServer.listen(Config.serverPort(), Config.serverIp());
+
+    System.out.println("Listening!");
 
     setup();
 
