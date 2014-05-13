@@ -25,12 +25,11 @@ public class Config {
   }
 
   static public Integer getInteger(String envVarName) {
-    return Integer.parseInt(get(envVarName));
+    return getInteger([envVarName], null);
   }
 
   static public Integer getInteger(String envVarName, Integer defaultValue) {
-    Integer value = Integer.parseInt(get(envVarName));
-    return value == null ? defaultValue : value;
+    return getInteger([envVarName], defaultValue);
   }
 
   static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
