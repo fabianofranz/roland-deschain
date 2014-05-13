@@ -5,8 +5,8 @@ import java.net.URLEncoder;
 
 public class Instagram {
 
-  static private final String INSTAGRAM_API_HOST = "https://api.instagram.com" 
-  static private final String INSTAGRAM_API_ENDPOINT = "/v1/subscriptions/" 
+  static private final String INSTAGRAM_API_HOST = "https://api.instagram.com";
+  static private final String INSTAGRAM_API_ENDPOINT = "/v1/subscriptions/";
   static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
 
   static public void requestSubscriptionToGeography(Double latitude, Double longitude, Integer radius) {
