@@ -46,7 +46,9 @@ public class Config {
   static public void configure() {
     try {
       Files.copy(new File("locations.json").toPath(), new File(configFile()).toPath());
-    } catch (IOException e) { }
+    } catch (IOException e) { 
+      System.out.println(e.getMessage());
+    }
   }
 
   static public String get(String envVarName) {
