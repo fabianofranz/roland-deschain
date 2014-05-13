@@ -19,7 +19,6 @@
         eb.registerHandler('MyChannel', function(message) {
           console.log('received a message: ' + JSON.stringify(message));
         });
-        //eb.send('some-address', {name: 'tim', age: 587});
       };
 
       eb.onclose = function() {
