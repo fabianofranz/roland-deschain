@@ -38,10 +38,10 @@ public class Server extends Verticle {
             String challenge = req.params().get("hub.challenge");
             String token = req.params().get("hub.verify_token");
 
-            Instagram.verifySubscriptionToGeography(challenge);
+            //Instagram.verifySubscriptionToGeography(challenge);
             
             req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
-            req.response().end("Verified");
+            req.response().end(challenge);
 
           } else if ("POST".equals(req.method())) {
           }
