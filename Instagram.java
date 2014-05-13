@@ -22,7 +22,7 @@ public class Instagram {
       append("lng=").append(longitude.toString()).append('&').
       append("radius=").append(radius.toString()).append('&').
       append("callback_url=").append(encode(CALLBACK_URL)).toString();
-    System.out.println("requestSubscribeToGeography returned: " + Request.Post(url).execute().returnContent().asString();
+    System.out.println("requestSubscribeToGeography returned: " + Request.Post(url).execute().returnContent().asString());
   }
 
   static public void verifySubscriptionToGeography(String challenge) {
@@ -31,7 +31,7 @@ public class Instagram {
       append(INSTAGRAM_API_ENDPOINT).
       append('?').
       append("hub.challenge=").append(challenge).toString();
-    System.out.println("verifySubscriptionToGeography returned: " + Request.Post(url).execute().returnContent().asString();
+    System.out.println("verifySubscriptionToGeography returned: " + Request.Post(url).execute().returnContent().asString());
   }
 
   static private String encode(String s) {
