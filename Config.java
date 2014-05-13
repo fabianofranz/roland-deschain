@@ -13,7 +13,7 @@ public class Config {
   }
 
   static public String get(String envVarName, String defaultValue) {
-    return get([envVarName], defaultValue);
+    return get(new String[]{envVarName}, defaultValue);
   }
 
   static public String get(String[] envVarNames, String defaultValue) {
@@ -25,11 +25,11 @@ public class Config {
   }
 
   static public Integer getInteger(String envVarName) {
-    return getInteger([envVarName], null);
+    return getInteger(new String[]{envVarName}, null);
   }
 
   static public Integer getInteger(String envVarName, Integer defaultValue) {
-    return getInteger([envVarName], defaultValue);
+    return getInteger(new String[]{envVarName}, defaultValue);
   }
 
   static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
