@@ -19,6 +19,8 @@ public class Server extends Verticle {
  
   public void start() {
 
+    setup();
+
     final EventBus eb = vertx.eventBus();
 
     HttpServer httpServer = vertx.createHttpServer();
@@ -62,4 +64,11 @@ public class Server extends Verticle {
     httpServer.listen(Config.serverPort(), Config.serverIp());
 
   }
+
+  private void setup() {
+    if (!Config.configured()) {
+      Config.configure();
+    }
+  }
+
 }

@@ -1,3 +1,6 @@
+import java.util.Map;
+import java.nio.file.Files;
+
 public class Config {
 
   static public String serverIp() {
@@ -16,6 +19,30 @@ public class Config {
         "VERTX_PORT"
       }, 
       8080);
+  }
+
+  static public String instagramClientId() {
+    return get("INSTAGRAM_CLIENT_ID");    
+  }
+
+  static public String instagramClientSecret() {
+    return get("INSTAGRAM_CLIENT_SECRET");    
+  }
+
+  static public String configDir() {
+    return get("OPENSHIFT_DATA_DIR", System.getProperty("java.io.tmpdir"));
+  }
+
+  static public String configFile() {
+    return configDir() + File.separator + "roland_deschain.json";
+  }
+
+  static public Boolean configured() {
+    return new File(configFile()).isFile();
+  }
+
+  static public void configure() {
+    Files.copy(new File("locations.json").toPath(), new File(configFile).toPath());
   }
 
   static public String get(String envVarName) {
