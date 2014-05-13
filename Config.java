@@ -42,7 +42,7 @@ public class Config {
   }
 
   static public void configure() {
-    Files.copy(new File("locations.json").toPath(), new File(configFile).toPath());
+    Files.copy(new File("locations.json").toPath(), new File(configFile()).toPath());
   }
 
   static public String get(String envVarName) {
