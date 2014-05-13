@@ -68,6 +68,7 @@ public class Server extends Verticle {
   private void setup() {
     if (!Config.configured()) {
       Config.configure();
+      
     }
   }
 
