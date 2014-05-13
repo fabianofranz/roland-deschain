@@ -25,7 +25,7 @@ public class Config {
   }
 
   static public Integer getInteger(String envVarName) {
-    return getInteger(new String[]{envVarName}, null);
+    return getInteger(envVarName, null);
   }
 
   static public Integer getInteger(String envVarName, Integer defaultValue) {
