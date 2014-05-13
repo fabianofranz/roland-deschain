@@ -46,14 +46,13 @@ public class Server extends Verticle {
           } else if ("POST".equals(req.method())) {
             req.bodyHandler(new Handler<Buffer>() {
               public void handle(Buffer body) {
-                eb.publish("MyChannel", body);
+                eb.publish("MyChannel", body.toString());
               }
             });
             req.response().end();
           }
 
         } else {
-          req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
           String file = req.path().equals("/") ? "index.html" : req.path();
           req.response().sendFile("web/" + file);
         }
