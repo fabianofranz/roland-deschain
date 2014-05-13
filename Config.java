@@ -18,4 +18,12 @@ public class Config {
     return value == null ? defaultValue : value;
   }
 
+  static public String serverIp() {
+    return get("OPENSHIFT_VERTX_IP", "127.0.0.1");
+  }
+
+  static public Integer serverPort() {
+    return getInteger("OPENSHIFT_VERTX_PORT", "8080");
+  }
+
 }
