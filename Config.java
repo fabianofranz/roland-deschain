@@ -33,8 +33,8 @@ public class Config {
   }
 
   static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
-    Integer value = Integer.parseInt(get(envVarNames));
-    return value == null ? defaultValue : value;
+    String value = get(envVarNames, defaultValue == null ? null : defaultValue.toString());
+    return value == null ? defaultValue : Integer.parseInt(value);
   }
 
 }
