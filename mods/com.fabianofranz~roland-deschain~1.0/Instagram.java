@@ -24,7 +24,7 @@ public class Instagram {
           add("lng", longitude.toString()).
           add("radius", radius.toString()).
           add("callback_url", CALLBACK_URL);
-      System.out.println("Form is " + form.toString());
+      System.out.println("Form is " + form.build().toString());
       String response = Request.Post(url).
         bodyForm(form.build()).
         execute().returnContent().asString();
