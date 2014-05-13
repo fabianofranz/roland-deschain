@@ -23,10 +23,10 @@ public class Instagram {
       append("radius=").append(radius.toString()).append('&').
       append("callback_url=").append(encode(CALLBACK_URL)).toString();
     try {
-      String response = Request.Post(url).execute().returnContent().asString()
+      String response = Request.Post(url).execute().returnContent().asString();
       System.out.println("requestSubscribeToGeography returned: " + response);
     } catch (Exception e) {
-      System.out.println(e.printStackTrace());
+      e.printStackTrace();
     }
   }
 
@@ -37,10 +37,10 @@ public class Instagram {
       append('?').
       append("hub.challenge=").append(challenge).toString();
     try {
-      String response = Request.Post(url).execute().returnContent().asString()
+      String response = Request.Post(url).execute().returnContent().asString();
       System.out.println("verifySubscriptionToGeography returned: " + response);
     } catch (Exception e) {
-      System.out.println(e.printStackTrace());
+      e.printStackTrace();
     }
   }
 
