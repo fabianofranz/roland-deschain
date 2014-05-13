@@ -44,7 +44,7 @@ public class Server extends Verticle {
             req.response().end("Verified");
 
           } else if ("POST".equals(req.method())) {
-            System.out.println("POST received!")
+            System.out.println("POST received!");
           }
 
         } else {
