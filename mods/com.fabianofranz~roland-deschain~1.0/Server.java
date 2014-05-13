@@ -85,7 +85,7 @@ public class Server extends Verticle {
   private void setup() {
     if (!Config.configured()) {
       Config.configure();
-      Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 5000);
+      Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 1000);
     }
   }
 

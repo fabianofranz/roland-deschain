@@ -15,8 +15,7 @@ public class Instagram {
 
     try {
       System.out.println("Going to POST: " + url);
-      String response = Request.Post(url).
-        bodyForm(Form.form().
+      Form form = Form.form().
           add("client_id", Config.instagramClientId()).
           add("client_secret", Config.instagramClientSecret()).
           add("object", "geography").
@@ -24,25 +23,12 @@ public class Instagram {
           add("lat", latitude.toString()).
           add("lng", longitude.toString()).
           add("radius", radius.toString()).
-          add("callback_url", CALLBACK_URL).build()).
+          add("callback_url", CALLBACK_URL);
+      System.out.println("Form is " + form.toString());
+      String response = Request.Post(url).
+        bodyForm(form.build()).
         execute().returnContent().asString();
       System.out.println("requestSubscribeToGeography returned: " + response);
-    } catch (Exception e) {
-      System.out.println(e.toString());
-      e.printStackTrace();
-    }
-  }
-
-  static public void verifySubscriptionToGeography(String challenge) {
-    String url = new StringBuilder().
-      append(INSTAGRAM_API_HOST).
-      append(INSTAGRAM_API_ENDPOINT).
-      append('?').
-      append("hub.challenge=").append(challenge).toString();
-    try {
-      System.out.println("Going to GET: " + url);
-      String response = Request.Get(url).execute().returnContent().asString();
-      System.out.println("verifySubscriptionToGeography returned: " + response);
     } catch (Exception e) {
       System.out.println(e.toString());
       e.printStackTrace();
