@@ -29,11 +29,13 @@ public class Config {
   }
 
   static public Integer getInteger(String envVarName, Integer defaultValue) {
-    return Integer.parseInt(get(envVarName));
+    Integer value = Integer.parseInt(get(envVarName));
+    return value == null ? defaultValue : value;
   }
 
   static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
-    return Integer.parseInt(get(envVarNames));
+    Integer value = Integer.parseInt(get(envVarNames));
+    return value == null ? defaultValue : value;
   }
 
 }
