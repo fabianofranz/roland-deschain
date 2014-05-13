@@ -45,6 +45,7 @@ public class Server extends Verticle {
     JsonObject config = new JsonObject().putString("prefix", "/event");
     JsonArray inbound = new JsonArray();
     JsonArray outbound = new JsonArray();
+    inbound.add(new JsonObject());
     //inbound.add(new JsonObject().putString("address", "MyChannel"));
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
