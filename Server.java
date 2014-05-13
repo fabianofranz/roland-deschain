@@ -31,9 +31,21 @@ public class Server extends Verticle {
     httpServer.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
-      	if (req.path().equals("/instagram")) {
-          req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
-          req.response().end("Hello from Java !!!");
+      	if (req.path().equals("/instagram/event")) {
+
+          if ("GET".equals(req.method())) {
+            String mode = req.params().get("hub.mode");
+            String challenge = req.params().get("hub.challenge");
+            String token = req.params().get("hub.verify_token");
+
+            Instagram.verifySubscriptionToGeography(challenge);
+            
+            req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
+            req.response().end("Verified");
+
+          } else if ("POST".equals(req.method())) {
+            System.out.println("POST received!")
+          }
 
         } else {
           req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
@@ -68,7 +80,7 @@ public class Server extends Verticle {
   private void setup() {
     if (!Config.configured()) {
       Config.configure();
-      
+      Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 5000);
     }
   }
 
