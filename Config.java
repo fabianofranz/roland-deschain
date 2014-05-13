@@ -12,6 +12,10 @@ public class Config {
     return get(envVarName, null);
   }
 
+  static public String get(String envVarName, String defaultValue) {
+    return get([envVarName], defaultValue);
+  }
+
   static public String get(String[] envVarNames, String defaultValue) {
     for (int i = 0; i < envVarNames.length; i++) {
       String value = System.getenv(envVarNames[i]);
@@ -20,17 +24,16 @@ public class Config {
     return defaultValue;
   }
 
-  static public String get(String envVarName, String defaultValue) {
-    return get([envVarName], defaultValue);
-  }
-
   static public Integer getInteger(String envVarName) {
     return Integer.parseInt(get(envVarName));
   }
 
   static public Integer getInteger(String envVarName, Integer defaultValue) {
-    Integer value = getInteger(envVarName);
-    return value == null ? defaultValue : value;
+    return Integer.parseInt(get(envVarName));
+  }
+
+  static public Integer getInteger(String[] envVarNames, Integer defaultValue) {
+    return Integer.parseInt(get(envVarNames));
   }
 
 }
