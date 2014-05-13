@@ -9,12 +9,19 @@ public class Config {
   }
 
   static public String get(String envVarName) {
-    return System.getenv(envVarName);
+    return get(envVarName, null);
+  }
+
+  static public String get(String[] envVarNames, String defaultValue) {
+    for (int i = 0; i < envVarNames.length; i++) {
+      String value = System.getenv(envVarNames[i]);
+      if value != null return value;
+    }
+    return defaultValue;
   }
 
   static public String get(String envVarName, String defaultValue) {
-    String value = get(envVarName);
-    return value == null ? defaultValue : value;
+    return get([envVarName], defaultValue);
   }
 
   static public Integer getInteger(String envVarName) {
