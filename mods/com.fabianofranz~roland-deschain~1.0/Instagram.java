@@ -1,6 +1,7 @@
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
+import org.apache.http.client.fluent.Form;
 import java.net.URLEncoder;
 
 public class Instagram {
@@ -38,7 +39,8 @@ public class Instagram {
       append('?').
       append("hub.challenge=").append(challenge).toString();
     try {
-      String response = Request.Post(url).execute().returnContent().asString();
+      System.out.println("Going to GET: " + url);
+      String response = Request.Get(url).execute().returnContent().asString();
       System.out.println("verifySubscriptionToGeography returned: " + response);
     } catch (Exception e) {
       e.printStackTrace();
