@@ -3,6 +3,8 @@ import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.client.fluent.Form;
 import java.net.URLEncoder;
+import java.util.Set;
+import java.util.HashSet;
 
 public class Instagram {
 
@@ -10,6 +12,17 @@ public class Instagram {
   static private final String INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT = "/v1/subscriptions/";
   static private final String INSTAGRAM_API_GEOGRAPHIES_ENDPOINT = "/v1/geographies/";
   static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
+
+  static public Set<String> wasNotifiedFor(String body) {
+    JsonArray events = new JsonArray(body.toString());
+    Set<String> r = new HashSet<String>();
+    for(int i = 0 ; i < events.size(); i++) {
+      JsonObject o = (JsonObject) events.get(i);
+      String geography = o.getString("object_id");
+      r.add(geography);
+    }
+    return r;
+  }
 
   static public void requestSubscriptionToGeography(Double latitude, Double longitude, Integer radius) {
     String url = new StringBuilder().

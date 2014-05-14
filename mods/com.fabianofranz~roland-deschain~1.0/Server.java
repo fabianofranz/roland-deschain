@@ -14,6 +14,7 @@ import org.vertx.java.core.eventbus.EventBus;
 import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
+import java.util.Set;
 
 public class Server extends Verticle {
  
@@ -41,10 +42,8 @@ public class Server extends Verticle {
           } else if ("POST".equals(req.method())) {
             req.bodyHandler(new Handler<Buffer>() {
               public void handle(Buffer body) {
-                JsonArray events = new JsonArray(body.toString());
-                for(int i = 0 ; i < events.size(); i++) {
-                  JsonObject o = (JsonObject) events.get(i);
-                  String geography = o.getString("object_id");
+                Set<String> geographies = Instagram.wasNotifiedFor(body);
+                for (String geography : geographies) {
                   String details = Instagram.fetchGeographyDetails(geography);
                   eb.publish("MyChannel", details);
                 }
