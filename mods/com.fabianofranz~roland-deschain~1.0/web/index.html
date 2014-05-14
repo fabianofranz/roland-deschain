@@ -17,7 +17,7 @@
       eb.onopen = function() {
         console.log('open');
         eb.registerHandler('MyChannel', function(message) {
-          console.log('received a message: ' + JSON.stringify(message));
+          document.getElementByID("console").append("<pre>" + JSON.stringify(message) + "</pre>");
         });
       };
 
@@ -26,26 +26,13 @@
       };
 
     });
-
-    function send(message) {
-      if (eb) {
-        console.log("sending message")
-        eb.publish("MyChannel", {text: message});
-      } else {
-        console.log("eb not opened")
-      }
     }
   </script>
 
 </head>
 <body>
 
-Hey!
-
-<form onsubmit="return false;">
-  <input type="text" name="message" value="Hello, World!"/>
-  <input type="button" value="Send SockJS data" onclick="send(this.form.message.value)"/>
-</form>
+<div id="console"></div>
 
 </body>
 </html>
