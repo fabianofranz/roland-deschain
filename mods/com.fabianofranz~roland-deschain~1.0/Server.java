@@ -42,7 +42,7 @@ public class Server extends Verticle {
           } else if ("POST".equals(req.method())) {
             req.bodyHandler(new Handler<Buffer>() {
               public void handle(Buffer body) {
-                Set<String> geographies = Instagram.wasNotifiedFor(body);
+                Set<String> geographies = Instagram.wasNotifiedFor(body.toString());
                 for (String geography : geographies) {
                   String details = Instagram.fetchGeographyDetails(geography);
                   eb.publish("MyChannel", details);
