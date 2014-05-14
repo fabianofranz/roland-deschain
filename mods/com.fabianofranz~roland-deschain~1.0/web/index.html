@@ -17,7 +17,7 @@
       eb.onopen = function() {
         console.log('open');
         eb.registerHandler('MyChannel', function(message) {
-          document.getElementByID("console").append("<pre>" + JSON.stringify(message) + "</pre>");
+          document.getElementById("console").append("<pre>" + JSON.stringify(message) + "</pre>");
         });
       };
 
