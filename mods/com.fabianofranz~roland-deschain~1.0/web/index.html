@@ -17,7 +17,10 @@
       eb.onopen = function() {
         console.log('open');
         eb.registerHandler('MyChannel', function(message) {
-          document.getElementById("console").innerHTML += "<pre>" + JSON.stringify(message) + "</pre>";
+          var data = JSON.parse(message).data;
+          for (i = 0; i < data.length; i++) {
+            document.getElementById("console").innerHTML += "<pre>" + data[i].images.thumbnail.url + "</pre>";
+          }
         });
       };
 

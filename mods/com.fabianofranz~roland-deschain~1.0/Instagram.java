@@ -33,7 +33,6 @@ public class Instagram {
         execute().returnContent().asString();
       System.out.println("requestSubscribeToGeography returned: " + response);
     } catch (Exception e) {
-      System.out.println(e.toString());
       e.printStackTrace();
     }
   }
