@@ -47,7 +47,7 @@ public class Server extends Verticle {
             req.bodyHandler(new Handler<Buffer>() {
               public void handle(Buffer body) {
                 JsonArray events = new JsonArray(body.toString());
-                for(int i = 0 ; i < events.length(); i++) {
+                for(int i = 0 ; i < events.size(); i++) {
                   JsonObject o = (JsonObject) events.get(i);
                   String geography = o.getString("object_id");
                   String details = Instagram.fetchGeographyDetails(geography);
