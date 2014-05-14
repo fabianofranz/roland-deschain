@@ -2,6 +2,8 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.client.fluent.Form;
+import org.vertx.java.core.json.JsonArray;
+import org.vertx.java.core.json.JsonObject;
 import java.net.URLEncoder;
 import java.util.Set;
 import java.util.HashSet;
