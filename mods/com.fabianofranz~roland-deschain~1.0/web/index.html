@@ -19,7 +19,7 @@
         eb.registerHandler('MyChannel', function(message) {
           var data = JSON.parse(message).data;
           for (i = 0; i < data.length; i++) {
-            document.getElementById("console").innerHTML += "<pre>" + data[i].images.thumbnail.url + "</pre>";
+            document.getElementById("console").innerHTML += "<img src=\"" + data[i].images.thumbnail.url + "\" /><br />";
           }
         });
       };

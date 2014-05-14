@@ -29,17 +29,12 @@ public class Server extends Verticle {
     httpServer.requestHandler(new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
 
-        System.out.println("Handling " + req.method() + ": " + req.path());
-
       	if (req.path().equals("/instagram/event")) {
 
           if ("GET".equals(req.method())) {
             String mode = req.params().get("hub.mode");
             String challenge = req.params().get("hub.challenge");
             String token = req.params().get("hub.verify_token");
-
-            //Instagram.verifySubscriptionToGeography(challenge);
-            
             req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
             req.response().end(challenge);
 
