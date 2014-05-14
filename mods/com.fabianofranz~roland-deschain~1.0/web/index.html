@@ -22,7 +22,7 @@
           console.log('received stuff');
           var data = JSON.parse(message).data;
           for (i = 0; i < data.length; i++) {
-            //var item = data[i];
+            var item = data[i];
             //if (! jQuery.inArray(item.id, served)) {
               //served.push(item.id);
               document.getElementById("console").innerHTML += "<img src=\"" + item.images.thumbnail.url + "\" />";
