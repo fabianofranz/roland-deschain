@@ -7,11 +7,14 @@ import java.net.URLEncoder;
 public class Instagram {
 
   static private final String INSTAGRAM_API_HOST = "https://api.instagram.com";
-  static private final String INSTAGRAM_API_ENDPOINT = "/v1/subscriptions/";
+  static private final String INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT = "/v1/subscriptions/";
+  static private final String INSTAGRAM_API_GEOGRAPHIES_ENDPOINT = "/v1/geographies/";
   static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
 
   static public void requestSubscriptionToGeography(Double latitude, Double longitude, Integer radius) {
-    String url = new StringBuilder().append(INSTAGRAM_API_HOST).append(INSTAGRAM_API_ENDPOINT).toString();
+    String url = new StringBuilder().
+      append(INSTAGRAM_API_HOST).
+      append(INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT).toString();
 
     try {
       System.out.println("Going to POST: " + url);
@@ -32,6 +35,25 @@ public class Instagram {
     } catch (Exception e) {
       System.out.println(e.toString());
       e.printStackTrace();
+    }
+  }
+
+  static public String fetchGeographyDetails(String geography) {
+    String url = new StringBuilder().
+      append(INSTAGRAM_API_HOST).
+      append(INSTAGRAM_API_GEOGRAPHIES_ENDPOINT).
+      append(geography).
+      append("/media/recent").
+      append('?').
+      append("client_id=").append(Config.instagramClientId()).toString();
+
+    try {
+      String response = Request.Get(url).execute().returnContent().asString();
+      return response;
+    } catch (Exception e) {
+      System.out.println(e.toString());
+      e.printStackTrace();
+      return null;
     }
   }
 

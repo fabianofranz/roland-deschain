@@ -46,7 +46,13 @@ public class Server extends Verticle {
           } else if ("POST".equals(req.method())) {
             req.bodyHandler(new Handler<Buffer>() {
               public void handle(Buffer body) {
-                eb.publish("MyChannel", body.toString());
+                JsonArray events = new JsonArray(body.toString());
+                for(int i = 0 ; i < events.length(); i++) {
+                  JsonObject o = (JsonObject) events.get(i);
+                  String geography = o.getString("object_id");
+                  String details = Instagram.fetchGeographyDetails(geography);
+                  eb.publish("MyChannel", details);
+                }
               }
             });
             req.response().end();
@@ -76,6 +82,7 @@ public class Server extends Verticle {
 
   private void setup() {
     if (!Config.configured()) {
+      Instagram.unsubscribeEverything();
       Config.configure();
       Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 1000);
     }
