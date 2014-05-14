@@ -19,6 +19,7 @@
       eb.onopen = function() {
         console.log('open');
         eb.registerHandler('MyChannel', function(message) {
+          console.log('received stuff');
           var data = JSON.parse(message).data;
           for (i = 0; i < data.length; i++) {
             var item = data[i];
