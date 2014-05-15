@@ -2,9 +2,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
-import org.boon.json.JsonParser;
-import org.boon.json.JsonParserAndMapper;
-import org.boon.json.JsonParserFactory;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Cache {
 
@@ -19,10 +19,11 @@ public class Cache {
   public List<String> event(String json) {
     List<String> details = new ArrayList<String>();
 
-    JsonParserAndMapper mapper = new JsonParserFactory().create();
-    List<Map<String, Object>> events = (List<Map<String, Object>>) mapper.parseList(Class<Map<String, Object>>.class, json);
+    JSONParser parser = new JSONParser();
 
-    for (Map<String, Object> event : events) {
+    JSONArray events = (JSONArray) parser.parse(json);
+    for (int i = 0; i < events.size(); i++) {
+      JSONObject event = (JSONObject) events.get(i);
       String id = (String) event.get("object_id");
       details.add(Instagram.fetchGeographyDetails(id));
     }
