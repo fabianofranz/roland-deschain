@@ -17,8 +17,7 @@ public class Cache {
   public List<String> event(String json) {
     List<String> details = new ArrayList<String>();
 
-    List<Map> events = 
-      (List<Map>) JsonParser.parseList(Map.class, json);
+    List<Map> events = (List<Map>) new JsonParser().parseList(Map.class, json);
 
     for (Map event : events) {
       String id = (String) event.get("object_id");
