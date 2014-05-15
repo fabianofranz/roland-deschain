@@ -2,7 +2,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
-import org.boon.json.JSONParser;
+import org.boon.json.ObjectMapper;
+import org.boon.json.ObjectMapperFactory;
 
 public class Cache {
 
@@ -24,7 +25,7 @@ public class Cache {
 
     for (Map<String, String> event : events) {
       String id = event.get("object_id");
-      details.add(Instagram.fetchGeographyDetails(geography));
+      details.add(Instagram.fetchGeographyDetails(id));
     }
 
     return details;
