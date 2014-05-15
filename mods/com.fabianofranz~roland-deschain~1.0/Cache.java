@@ -21,11 +21,16 @@ public class Cache {
 
     JSONParser parser = new JSONParser();
 
-    JSONArray events = (JSONArray) parser.parse(json);
-    for (int i = 0; i < events.size(); i++) {
-      JSONObject event = (JSONObject) events.get(i);
-      String id = (String) event.get("object_id");
-      details.add(Instagram.fetchGeographyDetails(id));
+    try {
+      JSONArray events = (JSONArray) parser.parse(json);
+      for (int i = 0; i < events.size(); i++) {
+        JSONObject event = (JSONObject) events.get(i);
+        String id = (String) event.get("object_id");
+        details.add(Instagram.fetchGeographyDetails(id));
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     return details;
