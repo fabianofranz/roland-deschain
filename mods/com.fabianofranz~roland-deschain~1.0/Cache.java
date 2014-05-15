@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Map;
+import org.boon.json.JSONParser;
 
 public class Cache {
 
@@ -14,10 +16,17 @@ public class Cache {
 
   public List<String> event(String json) {
     List<String> details = new ArrayList<String>();
-    Set<String> geographies = Instagram.wasNotifiedFor(json);
-    for (String geography : geographies) {
+
+    ObjectMapper mapper =  ObjectMapperFactory.create();
+
+    List<Map<String, String>> events = 
+      (List<Map<String, String>>) mapper.readValue(json, List.class, Map.class);
+
+    for (Map<String, String> event : events) {
+      String id = event.get("object_id");
       details.add(Instagram.fetchGeographyDetails(geography));
     }
+
     return details;
   }
 

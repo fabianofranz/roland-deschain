@@ -51,8 +51,9 @@ public class Server extends Verticle {
 
     router.noMatch(new Handler<HttpServerRequest>() {
         public void handle(HttpServerRequest req) {
-          String file = req.path().equals("/") ? "index.html" : req.path();
-          req.response().sendFile("web/" + file);
+          String path = req.path();
+          String file = path.equals("/") || path.contains("..") ? "index.html" : req.path();
+          req.response().sendFile("./web/" + file);
         }
     });
 
