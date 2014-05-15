@@ -20,7 +20,7 @@ public class Cache {
     List<String> details = new ArrayList<String>();
 
     JsonParserAndMapper mapper = new JsonParserFactory().create();
-    List<Object> events = (List<Object>) mapper.parseList(List.class, json);
+    List<Object> events = (List<Object>) mapper.parseList(Object.class, json);
 
     for (Object event : events) {
       //String id = (String) event.get("object_id");
