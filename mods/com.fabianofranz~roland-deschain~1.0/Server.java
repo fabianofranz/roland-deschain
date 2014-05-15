@@ -40,9 +40,7 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
-            Set<String> geographies = Instagram.wasNotifiedFor(body.toString());
-            for (String geography : geographies) {
-              String details = Instagram.fetchGeographyDetails(geography);
+            for (String details : Cache.get().event(body.toString())) {
               vertx.eventBus().publish("MyChannel", details);
             }
           }
