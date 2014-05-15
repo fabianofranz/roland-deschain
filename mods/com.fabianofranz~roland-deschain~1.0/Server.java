@@ -60,13 +60,15 @@ public class Server extends Verticle {
         }
     });
 
+    httpServer.requestHandler(router);
+
     JsonObject config = new JsonObject().putString("prefix", "/event");
     JsonArray inbound = new JsonArray(); //nothing
     JsonArray outbound = new JsonArray();
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
-    httpServer.requestHandler(router).listen(Config.serverPort(), Config.serverIp());
+    httpServer.listen(Config.serverPort(), Config.serverIp());
 
     setup();
 
