@@ -3,8 +3,6 @@ import java.util.ArrayList;
 
 public class Cache {
 
-  private 
-
   static private final Cache INSTANCE = new Cache();
 
   static public Cache get() {
