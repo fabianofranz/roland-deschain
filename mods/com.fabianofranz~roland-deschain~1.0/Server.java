@@ -21,8 +21,6 @@ public class Server extends Verticle {
  
   public void start() {
 
-    final EventBus eb = vertx.eventBus();
-
     HttpServer httpServer = vertx.createHttpServer();
     httpServer.setCompressionSupported(true);
 
@@ -45,7 +43,7 @@ public class Server extends Verticle {
             Set<String> geographies = Instagram.wasNotifiedFor(body.toString());
             for (String geography : geographies) {
               String details = Instagram.fetchGeographyDetails(geography);
-              eb.publish("MyChannel", details);
+              vertx.eventBus().publish("MyChannel", details);
             }
           }
         });
