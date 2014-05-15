@@ -20,11 +20,11 @@ public class Cache {
     List<String> details = new ArrayList<String>();
 
     JsonParserAndMapper mapper = new JsonParserFactory().create();
-    List<Object> events = (List<Object>) mapper.parseList(Object.class, json);
+    List<Map<String, Object>> events = (List<Map<String, Object>>) mapper.parseList(Map.class, json);
 
-    for (Object event : events) {
-      //String id = (String) event.get("object_id");
-      //details.add(Instagram.fetchGeographyDetails(id));
+    for (Map<String, Object> event : events) {
+      String id = (String) event.get("object_id");
+      details.add(Instagram.fetchGeographyDetails(id));
     }
 
     return details;
