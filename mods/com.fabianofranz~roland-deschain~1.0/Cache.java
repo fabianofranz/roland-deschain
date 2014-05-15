@@ -17,10 +17,6 @@ public class Cache {
   public List<String> event(String json) {
     List<String> details = new ArrayList<String>();
 
-    JsonParser
-
-    ObjectMapper mapper =  ObjectMapperFactory.create();
-
     List<Map> events = 
       (List<Map>) JsonParser.parseList(Map.class, json);
 
