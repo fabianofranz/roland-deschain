@@ -11,6 +11,7 @@ import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.core.sockjs.EventBusBridgeHook;
 import org.vertx.java.core.sockjs.SockJSSocket;
 import org.vertx.java.core.eventbus.EventBus;
+import org.vertx.java.core.http.RouteMatcher;
 import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
@@ -25,50 +26,47 @@ public class Server extends Verticle {
     HttpServer httpServer = vertx.createHttpServer();
     httpServer.setCompressionSupported(true);
 
-    // TODO RouteMatcher routeMatcher = new RouteMatcher();
+    RouteMatcher router = new RouteMatcher();
 
-    httpServer.requestHandler(new Handler<HttpServerRequest>() {
+    router.get("/instagram/event", new Handler<HttpServerRequest>() {
       public void handle(HttpServerRequest req) {
+        String mode = req.params().get("hub.mode");
+        String challenge = req.params().get("hub.challenge");
+        String token = req.params().get("hub.verify_token");
+        req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
+        req.response().end(challenge);
+      }
+    });
 
-      	if (req.path().equals("/instagram/event")) {
-
-          if ("GET".equals(req.method())) {
-            String mode = req.params().get("hub.mode");
-            String challenge = req.params().get("hub.challenge");
-            String token = req.params().get("hub.verify_token");
-            req.response().headers().set("Content-Type", "text/html; charset=UTF-8");
-            req.response().end(challenge);
-
-          } else if ("POST".equals(req.method())) {
-            req.bodyHandler(new Handler<Buffer>() {
-              public void handle(Buffer body) {
-                Set<String> geographies = Instagram.wasNotifiedFor(body.toString());
-                for (String geography : geographies) {
-                  String details = Instagram.fetchGeographyDetails(geography);
-                  eb.publish("MyChannel", details);
-                }
-              }
-            });
-            req.response().end();
+    router.post("/instagram/event", new Handler<HttpServerRequest>() {
+      public void handle(HttpServerRequest req) {
+        req.bodyHandler(new Handler<Buffer>() {
+          public void handle(Buffer body) {
+            Set<String> geographies = Instagram.wasNotifiedFor(body.toString());
+            for (String geography : geographies) {
+              String details = Instagram.fetchGeographyDetails(geography);
+              eb.publish("MyChannel", details);
+            }
           }
+        });
+        req.response().end();
+      }
+    });
 
-        } else {
+    router.noMatch(new Handler<HttpServerRequest>() {
+        public void handle(HttpServerRequest req) {
           String file = req.path().equals("/") ? "index.html" : req.path();
           req.response().sendFile("web/" + file);
         }
-
-      }
     });
 
     JsonObject config = new JsonObject().putString("prefix", "/event");
     JsonArray inbound = new JsonArray(); //nothing
     JsonArray outbound = new JsonArray();
-    //inbound.add(new JsonObject()); //everything
-    //inbound.add(new JsonObject().putString("address", "MyChannel"));
     outbound.add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
-    httpServer.listen(Config.serverPort(), Config.serverIp());
+    httpServer.requestHandler(router).listen(Config.serverPort(), Config.serverIp());
 
     setup();
 

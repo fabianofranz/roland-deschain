@@ -26,7 +26,6 @@
             if (jQuery.inArray(item.id, served) == -1) {
               served.push(item.id);
               document.getElementById("console").innerHTML += "<img src=\"" + item.images.thumbnail.url + "\" />";
-              //document.getElementById("ids").innerHTML += item.id + ' ';
             }
           }
         });
@@ -42,7 +41,6 @@
 </head>
 <body>
 
-<div id="ids"></div>
 <div id="console"></div>
 
 </body>
