@@ -19,38 +19,35 @@ public class Cache {
   private final Map<String, JsonObject> cache = 
     Collections.synchronizedMap(
       new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
-
-        public JsonObject insert(String key, JsonObject value) {
-          JsonObject v = get(key);
-          if (v == null) {
-            System.out.println("Cache:cache:put Will put " + key);
-            put(key, value);
-            return true;
-          } else {
-            System.out.println("Cache:cache:put " + key + " already there");
-            return false;
-          }
-        }
-
         protected boolean removeEldestEntry(Map.Entry eldest) {
           boolean remove = size() > CACHE_MAX_SIZE;
           System.out.println("Cache:cache: removeEldestEntry? " + remove);
           return remove;
         }
-
       });
 
   private Cache() {
     System.out.println("Cache: created instance!");
-
   }
 
   static public Cache instance() {
     return INSTANCE;
   }
 
-  public Map<String, JsonObject> cache() {
-    return cache;
+  public Integer size() {
+    return cache.size();
+  }
+
+  public Boolean insert(String key, JsonObject value) {
+    JsonObject v = cache.get(key);
+    if (v == null) {
+      System.out.println("Cache:cache:put Will put " + key);
+      cache.put(key, value);
+      return true;
+    } else {
+      System.out.println("Cache:cache:put " + key + " already there");
+      return false;
+    }
   }
 
   public List<JsonObject> handleEvent(final String json) {
