@@ -20,14 +20,15 @@ public class Cache {
     Collections.synchronizedMap(
       new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
 
-        public JsonObject put(String key, JsonObject value) {
+        public JsonObject insert(String key, JsonObject value) {
           JsonObject v = get(key);
           if (v == null) {
             System.out.println("Cache:cache:put Will put " + key);
-            return super.put(key, value);
+            put(key, value);
+            return true;
           } else {
             System.out.println("Cache:cache:put " + key + " already there");
-            return v;
+            return false;
           }
         }
 
@@ -52,12 +53,13 @@ public class Cache {
     return cache;
   }
 
-  public List<JsonObject> event(final String json) {
+  public List<JsonObject> handleEvent(final String json) {
     return new ArrayList<JsonObject>() {{
       for (String id : Instagram.parseEventObjectIds(json)) {
         JsonObject details = Instagram.fetchGeographyDetails(id);
-        cache.put(id, details);
-        add(details);
+        if (cache.insert(id, details)) {
+          add(details);
+        }
       }
     }};
   }

@@ -40,7 +40,7 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
-            for (JsonObject details : Cache.instance().event(body.toString())) {
+            for (JsonObject details : Cache.instance().handleEvent(body.toString())) {
               vertx.eventBus().publish("MyChannel", details.toString());
               System.out.println("Cache size: " + Cache.instance().cache().size());
             }
