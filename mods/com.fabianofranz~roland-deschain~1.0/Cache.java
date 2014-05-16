@@ -20,8 +20,8 @@ public class Cache {
     Collections.synchronizedMap(
       new LinkedHashMap<String, JsonObject>() {
 
-        public V put(K key, V value) {
-          V value = get(key);
+        public JsonObject put(String key, JsonObject value) {
+          JsonObject value = get(key);
           if (value == null) {
             return super.put(key, value);
           } else {
@@ -35,7 +35,10 @@ public class Cache {
 
       });
 
-  private Cache() {}
+  private Cache() {
+    System.out.println("Created instance!");
+
+  }
 
   static public Cache instance() {
     return INSTANCE;
