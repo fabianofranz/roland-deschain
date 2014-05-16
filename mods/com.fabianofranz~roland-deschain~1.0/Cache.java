@@ -19,16 +19,27 @@ public class Cache {
   private final Map<String, JsonObject> cache = 
     Collections.synchronizedMap(
       new LinkedHashMap<String, JsonObject>() {
+
+        public V put(K key, V value) {
+          V value = get(key);
+          if (value == null) {
+            return super.put(key, value);
+          } else {
+            return value;
+          }
+        }
+
         protected boolean removeEldestEntry(Map.Entry eldest) {
           return size() > CACHE_MAX_SIZE;
         }
+
       });
+
+  private Cache() {}
 
   static public Cache instance() {
     return INSTANCE;
   }
-
-  private Cache() {}
 
   public Map<String, JsonObject> cache() {
     return cache;
