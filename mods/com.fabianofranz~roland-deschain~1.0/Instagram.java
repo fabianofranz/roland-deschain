@@ -4,10 +4,6 @@ import org.apache.http.client.fluent.Response;
 import org.apache.http.client.fluent.Form;
 import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
 import java.net.URLEncoder;
 import java.util.Set;
 import java.util.HashSet;
@@ -38,7 +34,7 @@ public class Instagram {
     return ids;
   }
 
-  static public JSONObject fetchGeographyDetails(String geography) {
+  static public JsonObject fetchGeographyDetails(String geography) {
     String url = new StringBuilder().
       append(INSTAGRAM_API_HOST).
       append(INSTAGRAM_API_GEOGRAPHIES_ENDPOINT).
@@ -48,10 +44,7 @@ public class Instagram {
       append("client_id=").append(Config.instagramClientId()).toString();
     try {
       String response = Request.Get(url).execute().returnContent().asString();
-      return (JSONObject) new JSONParser().parse(response);
-    } catch (ParseException e) {
-      e.printStackTrace();
-      return null;
+      return new JsonObject(response);
     } catch (IOException e) {
       e.printStackTrace();
       return null;
