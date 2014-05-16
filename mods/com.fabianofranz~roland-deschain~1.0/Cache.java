@@ -12,8 +12,16 @@ import java.util.Queue;
 public class Cache {
 
   static private final Integer CACHE_MAX_SIZE = 300;
+
   static private final Cache INSTANCE = new Cache();
-  private final Queue<JsonObject> cache = new CircularFifoQueue<JsonObject>(CACHE_MAX_SIZE);
+
+  private final Map<String, JsonObject> cache = 
+    Collections.synchronizedMap(
+      new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
+        protected boolean removeEldestEntry(Map.Entry eldest) {
+          return size() > CACHE_MAX_SIZE;
+        }
+      });
 
   static public Cache get() {
     return INSTANCE;
@@ -21,11 +29,15 @@ public class Cache {
 
   private Cache() {}
 
+  public Map<String, JsonObject> cache() {
+    return cache;
+  }
+
   public List<JsonObject> event(final String json) {
     return new ArrayList<JsonObject>() {{
       for (String id : Instagram.parseEventObjectIds(json)) {
         JsonObject details = Instagram.fetchGeographyDetails(id);
-        cache.add(details);
+        cache.add(id, details);
         add(details);
       }
     }};
