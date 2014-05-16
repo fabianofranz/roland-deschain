@@ -22,22 +22,17 @@ public class Instagram {
   static private final String INSTAGRAM_API_GEOGRAPHIES_ENDPOINT = "/v1/geographies/";
   static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
 
-  static public JSONArray parseEvent(final String json) {
-    try {
-      return (JSONArray) new JSONParser().parse(json);
-     } catch (ParseException e) {
-      e.printStackTrace();
-      return null;
-    }
+  static public JsonArray parseEvent(final String json) {
+    return new JsonArray(json);
   }
 
   static public List<String> parseEventObjectIds(final String json) {
     List<String> ids = new ArrayList<String>();
-    JSONArray events = parseEvent(json);
+    JsonArray events = parseEvent(json);
     if (events != null) {
       for (int i = 0; i < events.size(); i++) {
-        JSONObject event = (JSONObject) events.get(i);
-        ids.add((String) event.get("object_id"));
+        JsonObject event = (JsonObject) events.get(i);
+        ids.add(event.getString("object_id"));
       }
     }
     return ids;
