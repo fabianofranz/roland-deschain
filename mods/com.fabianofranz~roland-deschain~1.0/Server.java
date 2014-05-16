@@ -41,7 +41,7 @@ public class Server extends Verticle {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
             for (JsonObject details : Cache.get().event(body.toString())) {
-              vertx.eventBus().publish("MyChannel", details);
+              vertx.eventBus().publish("MyChannel", details.toString());
             }
           }
         });
