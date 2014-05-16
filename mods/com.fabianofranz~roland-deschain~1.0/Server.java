@@ -41,7 +41,7 @@ public class Server extends Verticle {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
             for (JsonObject details : Cache.get().event(body.toString())) {
-              vertx.eventBus().publish("MyChannel", details.toString());
+              vertx.eventBus().publish("MyChannel", details);
             }
           }
         });
@@ -61,8 +61,7 @@ public class Server extends Verticle {
 
     JsonObject config = new JsonObject().putString("prefix", "/event");
     JsonArray inbound = new JsonArray(); //nothing
-    JsonArray outbound = new JsonArray();
-    outbound.add(new JsonObject().putString("address", "MyChannel"));
+    JsonArray outbound = new JsonArray().add(new JsonObject().putString("address", "MyChannel"));
     vertx.createSockJSServer(httpServer).bridge(config, inbound, outbound);
 
     httpServer.listen(Config.serverPort(), Config.serverIp());
