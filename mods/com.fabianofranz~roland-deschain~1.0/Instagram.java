@@ -34,7 +34,7 @@ public class Instagram {
     return ids;
   }
 
-  static public JsonObject fetchGeographyDetails(String geography) {
+  static public JsonObject fetchGeographyDetails(final String geography) {
     String url = new StringBuilder().
       append(INSTAGRAM_API_HOST).
       append(INSTAGRAM_API_GEOGRAPHIES_ENDPOINT).
@@ -51,7 +51,7 @@ public class Instagram {
     }
   }
 
-  static public void requestSubscriptionToGeography(Double latitude, Double longitude, Integer radius) {
+  static public void requestSubscriptionToGeography(final Double latitude, final Double longitude, final Integer radius) {
     String url = new StringBuilder().
       append(INSTAGRAM_API_HOST).
       append(INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT).toString();
