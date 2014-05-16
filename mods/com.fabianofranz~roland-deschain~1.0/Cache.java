@@ -18,25 +18,29 @@ public class Cache {
 
   private final Map<String, JsonObject> cache = 
     Collections.synchronizedMap(
-      new LinkedHashMap<String, JsonObject>() {
+      new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
 
         public JsonObject put(String key, JsonObject value) {
           JsonObject v = get(key);
           if (v == null) {
+            System.out.println("Cache:cache:put Will put " + key);
             return super.put(key, value);
           } else {
+            System.out.println("Cache:cache:put " + key + " already there");
             return v;
           }
         }
 
         protected boolean removeEldestEntry(Map.Entry eldest) {
-          return size() > CACHE_MAX_SIZE;
+          boolean remove = size() > CACHE_MAX_SIZE;
+          System.out.println("Cache:cache: removeEldestEntry? " + remove);
+          return remove;
         }
 
       });
 
   private Cache() {
-    System.out.println("Created instance!");
+    System.out.println("Cache: created instance!");
 
   }
 
