@@ -24,7 +24,7 @@ public class Cache {
         }
       });
 
-  static public Cache get() {
+  static public Cache instance() {
     return INSTANCE;
   }
 
