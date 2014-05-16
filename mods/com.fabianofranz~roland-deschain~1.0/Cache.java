@@ -52,8 +52,9 @@ public class Cache {
 
   public List<JsonObject> handleEvent(final String json) {
     return new ArrayList<JsonObject>() {{
-      for (String id : Instagram.parseEventObjectIds(json)) {
-        JsonObject details = Instagram.fetchGeographyDetails(id);
+      for (String geography : Instagram.parseEventObjectIds(json)) {
+        JsonObject details = Instagram.fetchGeographyDetails(geography);
+        String id = details.getString("object_id");
         if (insert(id, details)) {
           add(details);
         }
