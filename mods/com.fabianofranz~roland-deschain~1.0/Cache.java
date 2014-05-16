@@ -8,6 +8,7 @@ import org.vertx.java.core.json.JsonArray;
 import org.vertx.java.core.json.JsonObject;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import java.util.Queue;
+import java.util.LinkedHashMap;
 
 public class Cache {
 
@@ -37,7 +38,7 @@ public class Cache {
     return new ArrayList<JsonObject>() {{
       for (String id : Instagram.parseEventObjectIds(json)) {
         JsonObject details = Instagram.fetchGeographyDetails(id);
-        cache.add(id, details);
+        cache.put(id, details);
         add(details);
       }
     }};
