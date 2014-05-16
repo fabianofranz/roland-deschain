@@ -16,23 +16,11 @@ public class Cache {
 
   private Cache() { }
 
-  public List<String> event(String json) {
-    List<String> details = new ArrayList<String>();
-
-    JSONParser parser = new JSONParser();
-
-    try {
-      JSONArray events = (JSONArray) parser.parse(json);
-      for (int i = 0; i < events.size(); i++) {
-        JSONObject event = (JSONObject) events.get(i);
-        String id = (String) event.get("object_id");
-        details.add(Instagram.fetchGeographyDetails(id));
-      }
-
-    } catch (Exception e) {
-      e.printStackTrace();
+  public List<JSONObject> event(String json) {
+    List<JSONObject> details = new ArrayList<JSONObject>();
+    for (String id : Instagram.parseEventObjectIds(json)) {
+      details.add(Instagram.fetchGeographyDetails(id));
     }
-
     return details;
   }
 
