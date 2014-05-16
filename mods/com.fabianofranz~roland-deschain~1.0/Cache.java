@@ -2,9 +2,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.vertx.java.core.json.JsonArray;
+import org.vertx.java.core.json.JsonObject;
 
 public class Cache {
 
@@ -16,12 +15,12 @@ public class Cache {
 
   private Cache() { }
 
-  public List<JSONObject> event(String json) {
-    List<JSONObject> details = new ArrayList<JSONObject>();
-    for (String id : Instagram.parseEventObjectIds(json)) {
-      details.add(Instagram.fetchGeographyDetails(id));
-    }
-    return details;
+  public List<JsonObject> event(String json) {
+    return new ArrayList<JsonObject>() {{
+      for (String id : Instagram.parseEventObjectIds(json)) {
+        add(Instagram.fetchGeographyDetails(id));
+      }
+    }};
   }
 
 }
