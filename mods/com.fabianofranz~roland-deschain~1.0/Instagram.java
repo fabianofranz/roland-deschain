@@ -53,7 +53,7 @@ public class Instagram {
       append("client_id=").append(Config.instagramClientId()).toString();
     try {
       String response = Request.Get(url).execute().returnContent().asString();
-      return (JSONObject) new JSONParser().parse(geography);
+      return (JSONObject) new JSONParser().parse(response);
     } catch (ParseException e) {
       e.printStackTrace();
       return null;
