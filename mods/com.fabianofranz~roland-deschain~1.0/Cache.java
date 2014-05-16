@@ -21,11 +21,11 @@ public class Cache {
       new LinkedHashMap<String, JsonObject>() {
 
         public JsonObject put(String key, JsonObject value) {
-          JsonObject value = get(key);
-          if (value == null) {
+          JsonObject v = get(key);
+          if (v == null) {
             return super.put(key, value);
           } else {
-            return value;
+            return v;
           }
         }
 
