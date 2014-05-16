@@ -17,7 +17,7 @@ public class Cache {
 
   private final Map<String, JsonObject> cache = 
     Collections.synchronizedMap(
-      new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
+      new LinkedHashMap<String, JsonObject>() {
         protected boolean removeEldestEntry(Map.Entry eldest) {
           return size() > CACHE_MAX_SIZE;
         }
