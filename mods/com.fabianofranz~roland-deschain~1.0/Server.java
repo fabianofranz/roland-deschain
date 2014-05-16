@@ -16,6 +16,8 @@ import java.lang.Thread;
 import java.lang.Runnable;
 import java.lang.InterruptedException;
 import java.util.Set;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 public class Server extends Verticle {
  
@@ -40,7 +42,7 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
-            for (String details : Cache.get().event(body.toString())) {
+            for (JSONObject details : Cache.get().event(body.toString())) {
               vertx.eventBus().publish("MyChannel", details);
             }
           }

@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ArrayList;
 import java.io.IOException;
 
 public class Instagram {
@@ -52,7 +53,7 @@ public class Instagram {
       append("client_id=").append(Config.instagramClientId()).toString();
     try {
       String response = Request.Get(url).execute().returnContent().asString();
-      return (JSONObject) new JSONParser().parse(json);
+      return (JSONObject) new JSONParser().parse(geography);
     } catch (ParseException e) {
       e.printStackTrace();
       return null;
