@@ -47,7 +47,7 @@ public class Server extends Verticle {
                 JsonObject item = (JsonObject) items.get(i);
                 String id = item.getString("id");
                 if (Cache.instance().insert(id, item)) {
-                  vertx.eventBus().publish("MyChannel", details.toString());
+                  vertx.eventBus().publish("MyChannel", item.toString());
                 }
               }
             }
