@@ -40,7 +40,7 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
-            for (String geography : Instagram.parseEventGeographies(body)) {
+            for (String geography : Instagram.parseEventGeographies(body.toString())) {
               JsonObject envelope = Instagram.fetchGeographyDetails(geography);
               JsonArray items = envelope.getArray("data");
               for (int i = 0; i < items.size(); i++) {
