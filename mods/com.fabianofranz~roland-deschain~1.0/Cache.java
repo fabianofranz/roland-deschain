@@ -21,7 +21,7 @@ public class Cache {
       new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
         protected boolean removeEldestEntry(Map.Entry eldest) {
           boolean remove = size() > CACHE_MAX_SIZE;
-          System.out.println("Cache:cache: removeEldestEntry? " + remove);
+          if (remove) System.out.println("Cache:cache: WILL REMOVE ELDEST");
           return remove;
         }
       });
