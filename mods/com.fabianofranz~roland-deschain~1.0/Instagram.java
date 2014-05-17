@@ -22,7 +22,7 @@ public class Instagram {
     return new JsonArray(json);
   }
 
-  static public List<String> parseEventObjectIds(final String json) {
+  static public List<String> parseEventGeographies(final String json) {
     List<String> ids = new ArrayList<String>();
     JsonArray events = parseEvent(json);
     if (events != null) {

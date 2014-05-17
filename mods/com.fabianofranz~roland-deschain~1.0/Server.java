@@ -40,10 +40,18 @@ public class Server extends Verticle {
       public void handle(HttpServerRequest req) {
         req.bodyHandler(new Handler<Buffer>() {
           public void handle(Buffer body) {
-            for (JsonObject details : Cache.instance().handleEvent(body.toString())) {
-              vertx.eventBus().publish("MyChannel", details.toString());
-              System.out.println("Cache size: " + Cache.instance().size());
+            for (String geography : Instagram.parseEventGeographies(body)) {
+              JsonObject envelope = Instagram.fetchGeographyDetails(geography);
+              JsonArray items = envelope.getArray("data");
+              for (int i = 0; i < items.size(); i++) {
+                JsonObject item = (JsonObject) items.get(i);
+                String id = item.getString("id");
+                if (Cache.instance().insert(id, item)) {
+                  vertx.eventBus().publish("MyChannel", details.toString());
+                }
+              }
             }
+            System.out.println("Cache size: " + Cache.instance().size());
           }
         });
         req.response().end();

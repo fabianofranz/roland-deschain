@@ -50,20 +50,4 @@ public class Cache {
     }
   }
 
-  public List<JsonObject> handleEvent(final String json) {
-    return new ArrayList<JsonObject>() {{
-      for (String geography : Instagram.parseEventObjectIds(json)) {
-        JsonObject envelope = Instagram.fetchGeographyDetails(geography);
-        JsonArray items = envelope.getArray("data");
-        for (int i = 0; i < items.size(); i++) {
-          JsonObject item = (JsonObject) items.get(i);
-          String id = item.getString("object_id");
-          if (insert(id, item)) {
-            add(item);
-          }
-        }
-      }
-    }};
-  }
-
 }
