@@ -8,8 +8,6 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/vertx/2.0.0/vertxbus.min.js"></script>
   <script>
-    served = new Array();
-
     $(document).ready(function() {
       eb = new vertx.EventBus(
           window.location.protocol + '//' +
@@ -20,14 +18,11 @@
         console.log('open');
         eb.registerHandler('MyChannel', function(message) {
           console.log('received stuff');
-          var data = JSON.parse(message).data;
-          for (i = 0; i < data.length; i++) {
-            var item = data[i];
-            if (jQuery.inArray(item.id, served) == -1) {
-              served.push(item.id);
-              document.getElementById("console").innerHTML += "<img src=\"" + item.images.thumbnail.url + "\" />";
-            }
-          }
+          var data = JSON.parse(message);
+          //if (jQuery.inArray(item.id, served) == -1) {
+          //served.push(item.id);
+          document.getElementById("console").innerHTML += "<img src=\"" + data.images.thumbnail.url + "\" />";
+          //}
         });
       };
 
