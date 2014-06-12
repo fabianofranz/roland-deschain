@@ -13,7 +13,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="css/fonts.css">
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/libs/modernizr-2.0.6.min.js"></script>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vertx/2.0.0/vertxbus.min.js"></script>
+  <script type="text/javascript" defer src="js/plugins.js"></script>
+  <script type="text/javascript" defer src="js/script.js"></script>
 </head>
 
 <body>
@@ -21,7 +25,7 @@
   <header>
     <p class="quote">"The doorway was the Lady's eyes. <span class="roland">Roland Deschain</span> was looking through them."</p>
     <p class="info">What if you could see through people's eyes? Like Roland Deschain, now you can.</p>
-    <p class="tech">By <a href="http://twitter.com/fabianofranz">@fabianofranz</a>. Running on <a href="http://openshift.redhat.com"><span class="openshift">OpenShift (PaaS by Red Hat)</span></a>. <span class="javaee6">Java EE 6</span> via <span class="jbossas7">JBoss AS 7</span>, <span class="html5">HTML5</span> and <span class="css3">CSS3</span> (Boilerplate), <span class="instagram">Instagram API</span>. <a href="https://github.com/fabianofranz/roland-deschain" target="_blank">Grab the source</a>.</p>
+    <p class="tech">By <a href="http://twitter.com/fabianofranz">@fabianofranz</a>. Running on <a href="http://openshift.com"><span class="openshift">OpenShift (PaaS by Red Hat)</span></a>. Powered by <a href="http://vertx.io"><span class="vertx">Vert.x</span></a>, <a href="http://maps.google.com"><span class="googlemaps">Google Maps</span></a>, <span class="html5">HTML5</span> and <span class="css3">CSS3</span> (Boilerplate) and the <a href="http://instagram.com/developer/"><span class="instagram">Instagram API</span></a>. <a href="https://github.com/fabianofranz/roland-deschain" target="_blank">Grab the source</a>.</p>
   </header>
                     
   <div id="map" style="width:100%; height:100%"></div>
@@ -31,7 +35,7 @@
   <script type="text/javascript" src="js/jquery.stream-1.2.min.js"></script>
   <script type="text/javascript" defer src="js/plugins.js"></script>
   <script type="text/javascript" defer src="js/script.js"></script>
-	
+  
   <!--[if lt IE 7 ]>
     <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
