@@ -70,26 +70,26 @@ $(document).ready(function() {
       8000 + '/event');
 
     eb.onopen = function() {
-    console.log('open');
-    eb.registerHandler('MyChannel', function(message) {
-        var data = JSON.parse(message);
+        console.log('open');
+        eb.registerHandler('MyChannel', function(message) {
+            var data = JSON.parse(message);
 
-        item = { 
-            id: data.id,
-            data: {
-                latitude: data.location.latitude, 
-                longitude: data.location.longitude,
-                username: data.user.username, 
-                thumbnailWidth: data.images.thumbnail.width, 
-                thumbnailHeight: data.images.thumbnail.height, 
-                thumbnailUrl: data.images.thumbnail.url,
-                caption: data.caption == null ? null : data.caption.text,
-                url: data.link
+            item = { 
+                id: data.id,
+                data: {
+                    latitude: data.location.latitude, 
+                    longitude: data.location.longitude,
+                    username: data.user.username, 
+                    thumbnailWidth: data.images.thumbnail.width, 
+                    thumbnailHeight: data.images.thumbnail.height, 
+                    thumbnailUrl: data.images.thumbnail.url,
+                    caption: data.caption == null ? null : data.caption.text,
+                    url: data.link
+                }
             }
+
+            content.addItem(item);
         }
-
-        content.addItem(item);
-
     };
 
     eb.onclose = function() {
