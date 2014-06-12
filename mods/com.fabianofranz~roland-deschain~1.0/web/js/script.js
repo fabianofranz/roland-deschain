@@ -6,7 +6,7 @@ content = {
         play: true,
         latitude: -23.5451264,
         longitude: -46.4743351,
-        elementId: "satellite",
+        elementId: "map",
         zoom: 15
     },
     items: {},
