@@ -1,42 +1,55 @@
 <!doctype html>
-<html lang="en">
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Welcome to Vert.x</title>
+  <title>The doorway was the Lady's eyes. Roland Deschain was looking through them.</title>
+  <meta name="description" content="The doorway was the Lady's eyes. Roland Deschain was looking through them.">
+  <meta name="author" content="Fabiano Franz">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="css/fonts.css">
+  <link rel="stylesheet" href="css/style.css">
   <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/vertx/2.0.0/vertxbus.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      eb = new vertx.EventBus(
-          window.location.protocol + '//' +
-          window.location.hostname + ':' +
-          8000 + '/event');
-
-      eb.onopen = function() {
-        console.log('open');
-        eb.registerHandler('MyChannel', function(message) {
-          console.log('received stuff');
-          var data = JSON.parse(message);
-          //if (jQuery.inArray(item.id, served) == -1) {
-          //served.push(item.id);
-          document.getElementById("console").innerHTML += "<img src=\"" + data.images.thumbnail.url + "\" />";
-          //}
-        });
-      };
-
-      eb.onclose = function() {
-        console.log('close');
-      };
-
-    });
-  </script>
-
+  <script type="text/javascript" defer src="js/plugins.js"></script>
+  <script type="text/javascript" defer src="js/script.js"></script>
 </head>
+
 <body>
 
-<div id="console"></div>
+  <header>
+    <p class="quote">"The doorway was the Lady's eyes. <span class="roland">Roland Deschain</span> was looking through them."</p>
+    <p class="info">What if you could see through people's eyes? Like Roland Deschain, now you can.</p>
+    <p class="tech">By <a href="http://twitter.com/fabianofranz">@fabianofranz</a>. Running on <a href="http://openshift.com"><span class="openshift">OpenShift (PaaS by Red Hat)</span></a>. Powered by <span class="javaee6">Vert.x</span>, <span class="html5">HTML5</span> and <span class="css3">CSS3</span> (Boilerplate), <span class="instagram">Instagram API</span>.</p>
+  </header>
+                    
+  <div id="map" style="width:100%; height:100%"></div>
+
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" src="js/jquery.stream-1.2.min.js"></script>
+  <script type="text/javascript" defer src="js/plugins.js"></script>
+  <script type="text/javascript" defer src="js/script.js"></script>
+  
+  <!--[if lt IE 7 ]>
+    <script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+    <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+  <![endif]-->
+  
+    <script type="text/html" id="info">
+        <div class="info">
+            <div class="user"><span class="username"><%=username%></span> just saw</div>
+            <a href="<%=url%>" target="_blank"><img style="width:<%=thumbnailWidth%>px;height:<%=thumbnailHeight%>px;" src="<%=thumbnailUrl%>" /></a>
+            <% if (caption != null) { %>
+                <div class="caption"><%=caption%></div>
+            <% } %>
+        </div>
+    </script>
 
 </body>
 </html>
