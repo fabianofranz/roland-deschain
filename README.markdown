@@ -9,3 +9,13 @@ See it live:
 
 **http://jbossvertx-ffranz.rhcloud.com/**
 
+Unstable, a few things to do:
+
+- Automatically subscribe to Instagram API geographies (based on locations.json)
+- Responsiveness
+- Upgrade to Google Maps API v3
+- Pause, rewind, forward, play
+- Multiple geographies with filters
+- Better cache architecture, maybe Redis
+- Etc
+
