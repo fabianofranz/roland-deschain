@@ -38,23 +38,17 @@ content = {
     },
     
     addItem: function(item) {
-        if (content.items[item.id] == null) {
-            marker = content.addMarker(item.data.latitude, item.data.longitude);
-            marker.setTitle(item.id);
-            item.marker = marker;
-            content.items[item.id] = item;
-            google.maps.event.addListener(marker, "click", function() {
-                content.showItem(marker.getTitle());
-            });
-        }
+        marker = content.addMarker(item.data.latitude, item.data.longitude);
+        marker.setTitle(item.id);
+        item.marker = marker;
+        google.maps.event.addListener(marker, "click", function() {
+            content.showItem(item);
+        });
     },
     
-    showItem: function(id) {
-        item = content.items[id];
-        if (item != null) {
-            content.tooltip.setContent(tmpl("info", item.data));
-            content.tooltip.open(content.map, item.marker);
-        }
+    showItem: function(item) {
+        content.tooltip.setContent(tmpl("info", item.data));
+        content.tooltip.open(content.map, item.marker);
     }
      
 }
