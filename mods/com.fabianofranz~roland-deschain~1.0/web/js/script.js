@@ -7,7 +7,7 @@ content = {
         latitude: -23.5451264,
         longitude: -46.4743351,
         elementId: "map",
-        zoom: 16
+        zoom: 15
     },
     items: {},
     
