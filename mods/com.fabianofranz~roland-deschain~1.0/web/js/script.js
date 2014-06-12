@@ -20,7 +20,7 @@ content = {
             {
                 zoom: content.options.zoom,
                 center: position, 
-                mapTypeId: google.maps.MapTypeId.ROADMAP
+                mapTypeId: google.maps.MapTypeId.SATELLITE
             });
             
         content.tooltip = new google.maps.InfoWindow({ maxWidth: 250 });
