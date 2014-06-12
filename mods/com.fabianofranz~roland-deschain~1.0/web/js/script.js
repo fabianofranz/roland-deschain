@@ -88,7 +88,7 @@ $(document).ready(function() {
                 }
             }
             content.addItem(item);
-        }).
+        });
     };
 
     eb.onclose = function() {
