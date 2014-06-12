@@ -44,6 +44,7 @@ content = {
         google.maps.event.addListener(marker, "click", function() {
             content.showItem(item);
         });
+        content.showItem(item);
     },
     
     showItem: function(item) {
