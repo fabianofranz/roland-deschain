@@ -87,13 +87,12 @@ $(document).ready(function() {
                     url: data.link
                 }
             }
-
             content.addItem(item);
-        }
+        }).
     };
 
     eb.onclose = function() {
-    console.log('close');
+        console.log('close');
     };
 	                   
 });
