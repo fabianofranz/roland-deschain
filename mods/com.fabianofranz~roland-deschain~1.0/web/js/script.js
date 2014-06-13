@@ -48,7 +48,6 @@ content = {
   }
 }
 
-	
 $(document).ready(function() {
   content.setup();
 
