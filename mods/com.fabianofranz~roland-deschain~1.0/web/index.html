@@ -21,11 +21,15 @@
 </head>
 
 <body>
-
   <header>
     <p class="quote">"The doorway was the Lady's eyes. <span class="roland">Roland Deschain</span> was looking through them."</p>
     <p class="info">What if you could see through other people's eyes? Like Roland Deschain, now you can.</p>
-    <p class="tech">By <a href="http://twitter.com/fabianofranz">@fabianofranz</a>. Running on <a href="http://openshift.com"><span class="openshift">OpenShift (PaaS by Red Hat)</span></a>. Powered by <a href="http://vertx.io"><span class="vertx">Vert.x</span></a>, <a href="http://maps.google.com"><span class="googlemaps">Google Maps</span></a>, <span class="html5">HTML5</span> and <span class="css3">CSS3</span> (Boilerplate) and the <a href="http://instagram.com/developer/"><span class="instagram">Instagram API</span></a>. Go <a href="https://github.com/fabianofranz/roland-deschain" target="_blank">grab the source</a>!</p>
+    <p class="tech">
+      By <a href="http://twitter.com/fabianofranz">@fabianofranz</a>. 
+      Running on <a href="http://openshift.com"><span class="openshift">OpenShift</span></a>. 
+      Powered by <a href="http://vertx.io"><span class="vertx">Vert.x</span></a>, <a href="http://maps.google.com"><span class="googlemaps">Google Maps</span></a>, <span class="html5">HTML5</span> and <span class="css3">CSS3</span> (Boilerplate) and the <a href="http://instagram.com/developer/"><span class="instagram">Instagram API</span></a>. 
+      Go <a href="https://github.com/fabianofranz/roland-deschain" target="_blank">grab the source</a>!
+    </p>
   </header>
                     
   <div id="map" style="width:100%; height:100%"></div>
@@ -41,15 +45,14 @@
     <script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
   <![endif]-->
   
-    <script type="text/html" id="info">
-        <div class="info">
-            <div class="user"><span class="username"><%=username%></span> just saw</div>
-            <a href="<%=url%>" target="_blank"><img style="width:<%=thumbnailWidth%>px;height:<%=thumbnailHeight%>px;" src="<%=thumbnailUrl%>" /></a>
-            <% if (caption != null) { %>
-                <div class="caption"><%=caption%></div>
-            <% } %>
-        </div>
-    </script>
-
+  <script type="text/html" id="info">
+    <div class="info">
+      <div class="user"><span class="username"><%=username%></span> just saw</div>
+      <a href="<%=url%>" target="_blank"><img style="width:<%=thumbnailWidth%>px;height:<%=thumbnailHeight%>px;" src="<%=thumbnailUrl%>" /></a>
+      <% if (caption != null) { %>
+        <div class="caption"><%=caption%></div>
+      <% } %>
+    </div>
+  </script>
 </body>
 </html>

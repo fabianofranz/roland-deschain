@@ -51,7 +51,6 @@ public class Server extends Verticle {
                 }
               }
             }
-            System.out.println("Cache size: " + Cache.instance().size());
           }
         });
         req.response().end();
@@ -83,7 +82,7 @@ public class Server extends Verticle {
     if (!Config.configured()) {
       Instagram.unsubscribeEverything();
       Config.configure();
-      Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 1000);
+      //Instagram.requestSubscriptionToGeography(35.657872, 139.70232, 1000);
     }
   }
 

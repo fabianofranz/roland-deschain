@@ -21,14 +21,11 @@ public class Cache {
       new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
         protected boolean removeEldestEntry(Map.Entry eldest) {
           boolean remove = size() > CACHE_MAX_SIZE;
-          if (remove) System.out.println("Cache:cache: WILL REMOVE ELDEST");
           return remove;
         }
       });
 
-  private Cache() {
-    System.out.println("Cache: created instance!");
-  }
+  private Cache() { }
 
   static public Cache instance() {
     return INSTANCE;
@@ -41,11 +38,9 @@ public class Cache {
   public Boolean insert(String key, JsonObject value) {
     JsonObject v = cache.get(key);
     if (v == null) {
-      System.out.println("Cache:cache:put Will put " + key);
       cache.put(key, value);
       return true;
     } else {
-      System.out.println("Cache:cache:put " + key + " already there");
       return false;
     }
   }

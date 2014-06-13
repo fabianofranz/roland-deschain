@@ -57,7 +57,6 @@ public class Instagram {
       append(INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT).toString();
 
     try {
-      System.out.println("Going to POST: " + url);
       Form form = Form.form().
           add("client_id", Config.instagramClientId()).
           add("client_secret", Config.instagramClientSecret()).
@@ -67,7 +66,6 @@ public class Instagram {
           add("lng", longitude.toString()).
           add("radius", radius.toString()).
           add("callback_url", encode(CALLBACK_URL));
-      System.out.println("Form is " + form.build().toString());
       String response = Request.Post(url).
         bodyForm(form.build()).
         execute().returnContent().asString();
