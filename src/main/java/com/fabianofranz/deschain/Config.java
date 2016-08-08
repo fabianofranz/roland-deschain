@@ -1,3 +1,5 @@
+package com.fabianofranz.deschain;
+
 import java.util.Map;
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +12,7 @@ public class Config {
       new String[]{
         "OPENSHIFT_VERTX_IP",
         "VERTX_IP"
-      }, 
+      },
       "127.0.0.1");
   }
 
@@ -19,16 +21,16 @@ public class Config {
       new String[]{
         "OPENSHIFT_VERTX_PORT",
         "VERTX_PORT"
-      }, 
+      },
       8080);
   }
 
   static public String instagramClientId() {
-    return get("INSTAGRAM_CLIENT_ID");    
+    return get("INSTAGRAM_CLIENT_ID");
   }
 
   static public String instagramClientSecret() {
-    return get("INSTAGRAM_CLIENT_SECRET");    
+    return get("INSTAGRAM_CLIENT_SECRET");
   }
 
   static public String configDir() {
@@ -46,7 +48,7 @@ public class Config {
   static public void configure() {
     try {
       Files.copy(new File("locations.json").toPath(), new File(configFile()).toPath());
-    } catch (IOException e) { 
+    } catch (IOException e) {
       System.out.println(e.getMessage());
     }
   }

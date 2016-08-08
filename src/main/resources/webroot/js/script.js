@@ -9,29 +9,29 @@ content = {
     zoom: 15
   },
   items: {},
-  
-  setup: function() {      
+
+  setup: function() {
     var position = new google.maps.LatLng(content.options.latitude, content.options.longitude);
-    
+
     content.map = new google.maps.Map(
-      document.getElementById(content.options.elementId), 
+      document.getElementById(content.options.elementId),
       {
           zoom: content.options.zoom,
-          center: position, 
+          center: position,
           mapTypeId: google.maps.MapTypeId.SATELLITE
       });
-        
+
     content.tooltip = new google.maps.InfoWindow({ maxWidth: 250 });
   },
-  
-  addMarker: function(latitude, longitude) {      
+
+  addMarker: function(latitude, longitude) {
     marker = new google.maps.Marker({
         position: new google.maps.LatLng(latitude, longitude),
         map: content.map
     });
     return marker;
   },
-  
+
   addItem: function(item) {
     marker = content.addMarker(item.data.latitude, item.data.longitude);
     marker.setTitle(item.id);
@@ -41,7 +41,7 @@ content = {
     });
     content.showItem(item);
   },
-  
+
   showItem: function(item) {
     content.tooltip.setContent(tmpl("info", item.data));
     content.tooltip.open(content.map, item.marker);
@@ -54,21 +54,21 @@ $(document).ready(function() {
   eb = new vertx.EventBus(
     window.location.protocol + '//' +
     window.location.hostname + ':' +
-    8000 + '/event');
+    8080 + '/event');
 
   eb.onopen = function() {
       console.log('open');
       eb.registerHandler('MyChannel', function(message) {
         var data = JSON.parse(message);
 
-        item = { 
+        item = {
           id: data.id,
           data: {
-            latitude: data.location.latitude, 
+            latitude: data.location.latitude,
             longitude: data.location.longitude,
-            username: data.user.username, 
-            thumbnailWidth: data.images.thumbnail.width, 
-            thumbnailHeight: data.images.thumbnail.height, 
+            username: data.user.username,
+            thumbnailWidth: data.images.thumbnail.width,
+            thumbnailHeight: data.images.thumbnail.height,
             thumbnailUrl: data.images.thumbnail.url,
             caption: data.caption == null ? null : data.caption.text,
             url: data.link
@@ -80,6 +80,5 @@ $(document).ready(function() {
 
   eb.onclose = function() {
     console.log('close');
-  };	                   
+  };
 });
-

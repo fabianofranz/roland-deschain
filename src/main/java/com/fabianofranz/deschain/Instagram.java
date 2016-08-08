@@ -1,9 +1,11 @@
+package com.fabianofranz.deschain;
+
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.fluent.Content;
 import org.apache.http.client.fluent.Response;
 import org.apache.http.client.fluent.Form;
-import org.vertx.java.core.json.JsonArray;
-import org.vertx.java.core.json.JsonObject;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.json.JsonArray;
 import java.net.URLEncoder;
 import java.util.Set;
 import java.util.HashSet;
@@ -16,7 +18,7 @@ public class Instagram {
   static private final String INSTAGRAM_API_HOST = "https://api.instagram.com";
   static private final String INSTAGRAM_API_SUBSCRIPTIONS_ENDPOINT = "/v1/subscriptions/";
   static private final String INSTAGRAM_API_GEOGRAPHIES_ENDPOINT = "/v1/geographies/";
-  static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event"; 
+  static private final String CALLBACK_URL = "http://jbossvertx-ffranz.rhcloud.com/instagram/event";
 
   static public JsonArray parseEvent(final String json) {
     return new JsonArray(json);
@@ -27,7 +29,7 @@ public class Instagram {
     JsonArray events = parseEvent(json);
     if (events != null) {
       for (int i = 0; i < events.size(); i++) {
-        JsonObject event = (JsonObject) events.get(i);
+        JsonObject event = events.getJsonObject(i);
         ids.add(event.getString("object_id"));
       }
     }
@@ -85,6 +87,6 @@ public class Instagram {
     } catch (Exception e) {
       return s;
     }
-  } 
+  }
 
 }

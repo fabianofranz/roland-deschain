@@ -1,11 +1,13 @@
+package com.fabianofranz.deschain;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.Map;
 import java.util.LinkedHashSet;
 import java.util.Collections;
-import org.vertx.java.core.json.JsonArray;
-import org.vertx.java.core.json.JsonObject;
+import io.vertx.core.json.JsonObject;
+import io.vertx.core.json.JsonArray;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
 import java.util.Queue;
 import java.util.LinkedHashMap;
@@ -16,7 +18,7 @@ public class Cache {
 
   static private final Cache INSTANCE = new Cache();
 
-  private final Map<String, JsonObject> cache = 
+  private final Map<String, JsonObject> cache =
     Collections.synchronizedMap(
       new LinkedHashMap<String, JsonObject>(CACHE_MAX_SIZE) {
         protected boolean removeEldestEntry(Map.Entry eldest) {
